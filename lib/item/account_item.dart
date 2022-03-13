@@ -32,7 +32,7 @@ class Account extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                data.totalPrice.toStringAsFixed(2),
+                data.update().toStringAsFixed(2),
                 style: const TextStyle(color: Colors.white, fontSize: 20),
               ),
             ],

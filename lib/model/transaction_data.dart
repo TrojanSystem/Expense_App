@@ -46,7 +46,7 @@ class TransactionData extends ChangeNotifier {
 
   double update() {
     totalPrice;
-   return totalPrice;
+    return totalPrice;
   }
 
   double minusTotalPrice(double price) {

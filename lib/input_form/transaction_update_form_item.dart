@@ -147,6 +147,7 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                     );
                     print('updated value $total');
                     final updateExpense = TransactionModel(
+                      id: widget.index,
                       name: updatedName,
                       description: updatedDescription,
                       price: updatedPrice,

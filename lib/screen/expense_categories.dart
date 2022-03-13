@@ -3,13 +3,11 @@ import 'package:example/model/transaction_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class ExpenseCategories extends StatelessWidget {
   const ExpenseCategories({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -24,14 +22,22 @@ class ExpenseCategories extends StatelessWidget {
         title: const Text('Expense Categories'),
       ),
       body: Consumer<TransactionData>(
-        builder:(context,file,child) => ListView.builder(
-          itemCount: 2,
-          itemBuilder: (context, index) {
-            return ExpenseCategoriesItem(
-
-            );
-          },
-        ),
+        builder: (context, file, child) {
+          final totPrice = Provider.of<TransactionData>(context).totalPrice;
+          final filter = Provider.of<TransactionData>(context).expenseList;
+          final length = filter.map((e) => e.name).toSet().toList();
+          return ListView.builder(
+            itemCount: length.length,
+            itemBuilder: (context, index) {
+              return ExpenseCategoriesItem(
+                listOfExpense: file.expenseList,
+                expense: file.expenseList[index],
+                totalPrice : totPrice,
+                index: index,
+              );
+            },
+          );
+        },
       ),
     );
   }

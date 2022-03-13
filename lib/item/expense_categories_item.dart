@@ -1,24 +1,30 @@
-import 'package:example/model/transaction_data.dart';
+import 'package:example/model/transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
-import 'package:provider/provider.dart';
-
-import '../model/transaction_model.dart';
 
 class ExpenseCategoriesItem extends StatelessWidget {
-  // final TransactionModel expense;
-  //
-  // ExpenseCategoriesItem({this.expense});
+  final List listOfExpense;
+  final TransactionModel expense;
+  double totalPrice;
+  final int index;
+
+  ExpenseCategoriesItem(
+      {this.listOfExpense, this.index, this.expense, this.totalPrice});
 
   @override
   Widget build(BuildContext context) {
-    // final selectedItems = Provider.of<TransactionData>(context)
-    //     .expenseList
-    //     .where((element) => element.name == expense.name)
-    //     .toSet();
-    //
-    // print(selectedItems);
-
+    var y = listOfExpense.map((e) => e.name).toSet().toList();
+    var x = listOfExpense.where((e) => e.name.toString() == y[index]).toList();
+    var z = x.map((e) => e.name).toList();
+    var zz = x.map((e) => e.price).toList();
+    var sum = 0.0;
+    for (int x = 0; x < z.length; x++) {
+      sum += double.parse(zz[x]);
+    }
+    print('This is z $z');
+    // print('This is y $y');
+    print('sum is $sum');
+    print('total is $totalPrice');
     return SizedBox(
       width: double.infinity,
       //color: Colors.blue,
@@ -31,11 +37,11 @@ class ExpenseCategoriesItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      ' e.name',
-                      style: TextStyle(
+                      y[index],
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -49,7 +55,9 @@ class ExpenseCategoriesItem extends StatelessWidget {
                       child: FAProgressBar(
                         size: 20,
                         progressColor: Colors.green,
-                        currentValue: 10,
+                        currentValue: totalPrice == 0
+                            ? ((sum * 100) / 1).floor()
+                            : ((sum * 100) / totalPrice).floor(),
                         displayText: '%',
                         displayTextStyle: const TextStyle(
                           fontWeight: FontWeight.bold,
