@@ -1,7 +1,8 @@
 import 'package:example/model/transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:provider/provider.dart';
+import '../model/transaction_data.dart';
 
 class TransactionUpdateForm extends StatefulWidget {
   int index;
@@ -23,10 +24,10 @@ class TransactionUpdateForm extends StatefulWidget {
 
 class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
   final _formKey = GlobalKey<FormState>();
-  String name = '';
-  String description = '';
+  String updatedName = '';
+  String updatedDescription = '';
   String updatedPrice = '';
-  DateTime date = DateTime.now();
+  DateTime updatedDate = DateTime.now();
 
   void showDate() {
     showDatePicker(
@@ -36,7 +37,7 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
       lastDate: DateTime(DateTime.now().year + 1),
     ).then((val) {
       setState(() {
-        date = val;
+        updatedDate = val;
       });
     });
   }
@@ -66,7 +67,7 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                   ),
                 ),
                 onSaved: (value) {
-                  name = value;
+                  updatedName = value;
                 },
               ),
             ),
@@ -88,7 +89,7 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                   ),
                 ),
                 onSaved: (value) {
-                  description = value;
+                  updatedDescription = value;
                 },
               ),
             ),
@@ -128,7 +129,7 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                   ),
                 ),
                 Text(
-                  DateFormat.yMMMEd().format(date),
+                  DateFormat.yMMMEd().format(updatedDate),
                 ),
               ],
             ),
@@ -138,7 +139,22 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-
+                    double total =
+                        Provider.of<TransactionData>(context, listen: false)
+                            .updateTotalPrice(
+                      double.parse(widget.existedPrice),
+                      double.parse(updatedPrice),
+                    );
+                    print('updated value $total');
+                    final updateExpense = TransactionModel(
+                      name: updatedName,
+                      description: updatedDescription,
+                      price: updatedPrice,
+                      date: updatedDate.toString(),
+                      total: total.toString(),
+                    );
+                    Provider.of<TransactionData>(context, listen: false)
+                        .updateExpenseList(updateExpense);
                   }
                   Navigator.of(context).pop();
                 },

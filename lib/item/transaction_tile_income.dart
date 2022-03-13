@@ -20,9 +20,6 @@ class TransactionTileIncome extends StatefulWidget {
 class _TransactionTileIncomeState extends State<TransactionTileIncome> {
   @override
   Widget build(BuildContext context) {
-    Provider.of<TransactionData>(context).totalPrice =
-        double.parse(widget.expense.total);
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(
@@ -90,7 +87,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                           showModalBottomSheet(
                             context: context,
                             builder: (ctx) => TransactionUpdateForm(
-                                index: widget.index,
+                                index: widget.expense.id,
                                 existedDescription: widget.expense.description,
                                 existedName: widget.expense.name,
                                 existedPrice: widget.expense.price,
@@ -105,17 +102,26 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                       ),
                       IconButton(
                         onPressed: () async {
-
                           Provider.of<TransactionData>(context, listen: false)
                               .deleteExpenseList(widget.expense.id);
-                          double v =Provider.of<TransactionData>(context,listen: false)
+                          double totalMinus = Provider.of<TransactionData>(context,
+                                  listen: false)
                               .minusTotalPrice(
                             double.parse(widget.expense.price),
-
                           );
-                          print(v);
-                          print(widget.expense.price);
+                          print('Minus $totalMinus');
+                          final updateExpense = TransactionModel(
+                            id: widget.expense.id,
+                            name: widget.expense.name,
+                            description: widget.expense.description,
+                            price: widget.expense.price,
+                            date: widget.expense.date.toString(),
+                            total: totalMinus.toString(),
+                          );
+                          Provider.of<TransactionData>(context, listen: false)
+                              .updateExpenseList(updateExpense);
 
+                          print('index ${widget.expense.id}');
                         },
                         icon: const Icon(
                           Icons.delete_forever,
@@ -125,7 +131,6 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                       ),
                     ],
                   ),
-                  // const SizedBox(height: 40,),
                 ],
               ),
             ),

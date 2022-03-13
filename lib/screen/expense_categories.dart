@@ -1,5 +1,7 @@
 import 'package:example/item/expense_categories_item.dart';
+import 'package:example/model/transaction_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 class ExpenseCategories extends StatelessWidget {
@@ -21,11 +23,15 @@ class ExpenseCategories extends StatelessWidget {
         ),
         title: const Text('Expense Categories'),
       ),
-      body: ListView.builder(
-        itemCount: 2,
-        itemBuilder: (context, index) {
-          return ExpenseCategoriesItem();
-        },
+      body: Consumer<TransactionData>(
+        builder:(context,file,child) => ListView.builder(
+          itemCount: 2,
+          itemBuilder: (context, index) {
+            return ExpenseCategoriesItem(
+
+            );
+          },
+        ),
       ),
     );
   }
