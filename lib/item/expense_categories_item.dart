@@ -14,6 +14,8 @@ class ExpenseCategoriesItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var y = listOfExpense.map((e) => e.name).toSet().toList();
+    int ccc =DateTime.now().day;
+    var yy = listOfExpense.map((e) => DateTime.parse(e.date).day).toSet().toList();
     var x = listOfExpense.where((e) => e.name.toString() == y[index]).toList();
     var z = x.map((e) => e.name).toList();
     var zz = x.map((e) => e.price).toList();
@@ -21,7 +23,7 @@ class ExpenseCategoriesItem extends StatelessWidget {
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(zz[x]);
     }
-    print('This is z $z');
+    print('This is yy ${yy.first} $ccc');
     // print('This is y $y');
     print('sum is $sum');
     print('total is $totalPrice');
