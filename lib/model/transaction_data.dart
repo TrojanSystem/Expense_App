@@ -15,9 +15,9 @@ class TransactionData extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  void updaterChanger() {
-    isIncome = !isIncome;
-    //notifyListeners();
+  void updaterChanger(bool state) {
+    isIncome = state;
+    notifyListeners();
   }
 
   Future loadExpenseList() async {

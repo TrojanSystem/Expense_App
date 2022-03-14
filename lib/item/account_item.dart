@@ -19,7 +19,7 @@ class Account extends StatelessWidget {
             children: [
               const Income(),
               Container(width: 2, height: 100, color: Colors.white54),
-              const Expense(),
+               Expense(dailyExpense:data.update().toStringAsFixed(2)),
             ],
           ),
           Row(

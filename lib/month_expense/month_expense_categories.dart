@@ -3,6 +3,8 @@ import 'package:example/model/transaction_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'month_expense_categories_item.dart';
+
 class MonthExpenseCategories extends StatelessWidget {
   const MonthExpenseCategories({Key key}) : super(key: key);
 
@@ -19,7 +21,7 @@ class MonthExpenseCategories extends StatelessWidget {
                 end: Alignment.topLeft),
           ),
         ),
-        title: const Text('Monthly Expense Categories'),
+        title: const Text('Monthly Expense Tracker'),
       ),
       body: Consumer<TransactionData>(
         builder: (context, file, child) {
@@ -29,7 +31,7 @@ class MonthExpenseCategories extends StatelessWidget {
           return ListView.builder(
             itemCount: length.length,
             itemBuilder: (context, index) {
-              return ExpenseCategoriesItem(
+              return MonthExpenseCategoriesItem(
                 listOfExpense: file.expenseList,
                 expense: file.expenseList[index],
                 totalPrice: totPrice,

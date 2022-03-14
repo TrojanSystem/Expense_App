@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Expense extends StatelessWidget {
-  const Expense({Key key}) : super(key: key);
+  final String dailyExpense;
+   Expense({this.dailyExpense});
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,8 @@ class Expense extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
+              children:  [
+                const  Text(
                   'ETB: ',
                   style: TextStyle(
                     color: Colors.white,
@@ -43,8 +44,8 @@ class Expense extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '12.5',
-                  style: TextStyle(
+                  dailyExpense,
+                  style:const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

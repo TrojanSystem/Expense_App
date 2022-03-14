@@ -13,19 +13,7 @@ class DrawerItem extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          Expanded(
-            flex: 1,
-            child: TextButton(
-              child: const Text('Daily Expense'),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (ctx) => const ExpenseCategories(),
-                  ),
-                );
-              },
-            ),
-          ),
+          Expanded(flex: 1, child: Container()),
           Expanded(
             flex: 3,
             child: Container(
@@ -43,13 +31,13 @@ class DrawerItem extends StatelessWidget {
                   children: [
                     TextButton(
                       child: const Text(
-                        'Monthly Expense',
+                        'Daily Expense',
                         style: kkExpense,
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (ctx) => const MonthExpenseCategories(),
+                            builder: (ctx) => const ExpenseCategories(),
                           ),
                         );
                       },
@@ -59,13 +47,13 @@ class DrawerItem extends StatelessWidget {
                     ),
                     TextButton(
                       child: const Text(
-                        'Annually Expense',
+                        'Monthly Expense',
                         style: kkExpense,
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (ctx) => const ExpenseCategories(),
+                            builder: (ctx) => const MonthExpenseCategories(),
                           ),
                         );
                       },

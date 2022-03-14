@@ -67,20 +67,28 @@ class _MyHomePageState extends State<MyHomePage> {
                               style: kkStyles,
                             ),
                           )
-                        : ListView.builder(
-                            itemCount: data.expenseList.length,
-                            itemBuilder: (context, index) {
-                              return data.isIncome
-                                  ? TransactionTileIncome(
-                                      index: index,
-                                      expense: data.expenseList[index],
-                                    )
-                                  : TransactionTileExpense(
-                                      index: index,
-                                      expense: data.expenseList[index],
-                                    );
-                            },
-                          ),
+                        : data.isIncome
+                            ? ListView.builder(
+                                itemCount: data.expenseList.length,
+                                itemBuilder: (context, index) {
+                                  print(data.isIncome);
+                                  return TransactionTileIncome(
+                                    index: index,
+                                    expense: data.expenseList[index],
+                                  );
+                                },
+                              )
+                            : ListView.builder(
+                                itemCount: data.expenseList.length,
+                                itemBuilder: (context, index) {
+                                  print(data.isIncome);
+                                  return TransactionTileExpense(
+                                    index: index,
+                                    expense: data.expenseList[index],
+                                    change: data.isIncome,
+                                  );
+                                },
+                              ),
                   ),
                 ),
               ],
@@ -103,8 +111,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: FAProgressBar(
                   size: 20,
                   backgroundColor: Colors.grey,
-                  progressColor:
-                      budgetData.percent() < 100 ? Colors.green : Colors.red,
+                  progressColor: budgetData.percent() < 75
+                      ? Colors.green
+                      : budgetData.percent() < 100
+                          ? Colors.redAccent
+                          : Colors.red[800],
                   currentValue: budgetData.percent(),
                   displayText: '%',
                   displayTextStyle: const TextStyle(

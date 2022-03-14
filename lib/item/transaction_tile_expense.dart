@@ -9,8 +9,9 @@ import '../model/transaction_model.dart';
 class TransactionTileExpense extends StatefulWidget {
   final int index;
   final TransactionModel expense;
+  final bool change;
 
-  const TransactionTileExpense({this.expense, this.index});
+   TransactionTileExpense({this.expense, this.index,this.change});
 
   @override
   State<TransactionTileExpense> createState() => _TransactionTileExpenseState();
@@ -148,7 +149,7 @@ class _TransactionTileExpenseState extends State<TransactionTileExpense> {
             left: 20,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.red,
+                color:Colors.red,
                 borderRadius: BorderRadius.circular(10),
               ),
               width: 150,
@@ -157,7 +158,7 @@ class _TransactionTileExpenseState extends State<TransactionTileExpense> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const Icon(
-                    Icons.arrow_downward_rounded,
+                    Icons.arrow_upward_rounded,
                     size: 25,
                     color: Colors.white,
                   ),

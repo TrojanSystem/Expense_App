@@ -55,9 +55,9 @@ class _TransactionFormState extends State<TransactionForm> {
                   iconOff: FontAwesomeIcons.moneyBill,
                   textSize: 16.0,
                   onChanged: (bool state) {
+                    print('This is State $state');
                     Provider.of<TransactionData>(context, listen: false)
-                        .updaterChanger();
-
+                        .updaterChanger(state);
                   },
                 ),
               ],

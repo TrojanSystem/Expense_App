@@ -19,7 +19,7 @@ class ExpenseCategories extends StatelessWidget {
                 end: Alignment.topLeft),
           ),
         ),
-        title: const Text('Expense Categories'),
+        title: const Text('Daily Expense Tracker'),
       ),
       body: Consumer<TransactionData>(
         builder: (context, file, child) {

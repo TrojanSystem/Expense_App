@@ -9,7 +9,7 @@ import '../model/transaction_data.dart';
 class MonthExpenseCategoriesItem extends StatelessWidget {
   final List listOfExpense;
   final TransactionModel expense;
-  double totalPrice;
+  final double totalPrice;
   final int index;
 
   MonthExpenseCategoriesItem(
@@ -22,7 +22,7 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
     budget.isEmpty
         ? Provider.of<TransactionData>(context, listen: false).monthlyBudget = 0
         : Provider.of<TransactionData>(context, listen: false).monthlyBudget =
-        double.parse(budget.first.budget);
+            double.parse(budget.first.budget);
     var y = listOfExpense.map((e) => e.name).toSet().toList();
     var x = listOfExpense.where((e) => e.name.toString() == y[index]).toList();
     var z = x.map((e) => e.name).toList();
@@ -31,6 +31,7 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(zz[x]);
     }
+    double xxx = ((sum * 100) / double.parse(budget.first.budget));
 
     return SizedBox(
       width: double.infinity,
@@ -65,7 +66,7 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
                         progressColor: Colors.green,
                         currentValue: double.parse(budget.first.budget) == 0
                             ? (0).floor()
-                            : ((sum * 100) / double.parse(budget.first.budget)).floor(),
+                            : xxx.floor(),
                         displayText: '%',
                         displayTextStyle: const TextStyle(
                           fontWeight: FontWeight.bold,
