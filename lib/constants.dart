@@ -4,6 +4,12 @@ const kkStyles = TextStyle(
   fontWeight: FontWeight.w900,
   fontSize: 20,
 );
+const kkExpense = TextStyle(
+  color: Colors.white,
+  letterSpacing: 1.2,
+  fontSize: 25,
+  fontWeight: FontWeight.w900,
+);
 final kkButton = Container(
   width: double.infinity,
   height: 30.0,

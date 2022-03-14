@@ -20,12 +20,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final budgetData = Provider.of<TransactionData>(context, listen: false);
-    final budget = Provider.of<MonthlyBudgetData>(context, listen: false)
+    final budgetData = Provider.of<TransactionData>(context);
+    final budget = Provider.of<MonthlyBudgetData>(context)
         .monthlyBudgetList;
     budget.isEmpty
-        ? Provider.of<TransactionData>(context, listen: false).monthlyBudget = 0
-        : Provider.of<TransactionData>(context, listen: false).monthlyBudget =
+        ? Provider.of<TransactionData>(context).monthlyBudget = 0
+        : Provider.of<TransactionData>(context).monthlyBudget =
             double.parse(budget.first.budget);
 
     return Scaffold(

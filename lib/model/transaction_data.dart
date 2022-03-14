@@ -68,6 +68,7 @@ class TransactionData extends ChangeNotifier {
 //   _taskList = await db.getTasks();
 //   notifyListeners();
 // }
+
   int percent() {
     if (monthlyBudget == 0) {
       double percentage = 0;
