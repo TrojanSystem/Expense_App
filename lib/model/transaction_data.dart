@@ -5,6 +5,7 @@ import '../database/expense_database.dart';
 class TransactionData extends ChangeNotifier {
   DatabaseExpense db = DatabaseExpense();
   double totalPrice = 0;
+  double monthlyBudget = 0;
   bool _isLoading = true;
 
   List<TransactionModel> _expenseList = [];
@@ -59,6 +60,7 @@ class TransactionData extends ChangeNotifier {
     totalPrice += updatePrice;
     return totalPrice;
   }
+
 // Future changeStatusForTask(TransactionModel task) async {
 //   task.isCompeleted = !task.isCompeleted;
 //
@@ -66,5 +68,13 @@ class TransactionData extends ChangeNotifier {
 //   _taskList = await db.getTasks();
 //   notifyListeners();
 // }
-
+  int percent() {
+    if (monthlyBudget == 0) {
+      double percentage = 0;
+      return percentage.floor();
+    } else {
+      double percentage = ((totalPrice * 100) / monthlyBudget);
+      return percentage.floor();
+    }
+  }
 }

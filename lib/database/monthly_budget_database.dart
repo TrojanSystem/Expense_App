@@ -2,15 +2,13 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../model/month_budget_model.dart';
 
-
 class DatabaseMonthlyExpense {
   Future<Database> database() async {
     return openDatabase(
       join(await getDatabasesPath(), 'budgetList.db'),
       onCreate: (db, version) async {
         await db.execute(
-          '''CREATE TABLE budgetList(id INTEGER PRIMARY KEY, budget TEXT)''',
-        );
+            '''CREATE TABLE budgetList(id INTEGER PRIMARY KEY, budget TEXT)''');
       },
       version: 1,
     );
@@ -25,8 +23,9 @@ class DatabaseMonthlyExpense {
   Future<List<MonthlyBudget>> getTasks() async {
     Database db = await database();
     var tasks = await db.query('budgetList');
-    List<MonthlyBudget> tasksList =
-    tasks.isNotEmpty ? tasks.map((e) => MonthlyBudget.fromMap(e)).toList() : [];
+    List<MonthlyBudget> tasksList = tasks.isNotEmpty
+        ? tasks.map((e) => MonthlyBudget.fromMap(e)).toList()
+        : [];
     return tasksList;
   }
 

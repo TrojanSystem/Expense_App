@@ -4,7 +4,7 @@ import 'month_budget_model.dart';
 
 class MonthlyBudgetData extends ChangeNotifier {
   DatabaseMonthlyExpense db = DatabaseMonthlyExpense();
-  int taskDone = 0;
+
   bool _isMonthlyBudgetLoading = true;
   final bool _isTaped = true;
   List<MonthlyBudget> _monthlyBudgetList = [];

@@ -10,6 +10,7 @@ class Account extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Consumer<TransactionData>(
       builder:(context,data,child)=>Column(
         children: [

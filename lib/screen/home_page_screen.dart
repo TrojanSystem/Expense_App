@@ -20,7 +20,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final budget = Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
+    final budgetData = Provider.of<TransactionData>(context, listen: false);
+    final budget = Provider.of<MonthlyBudgetData>(context, listen: false)
+        .monthlyBudgetList;
+    budget.isEmpty
+        ? Provider.of<TransactionData>(context, listen: false).monthlyBudget = 0
+        : Provider.of<TransactionData>(context, listen: false).monthlyBudget =
+            double.parse(budget.first.budget);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -91,8 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: FAProgressBar(
                   size: 20,
                   backgroundColor: Colors.grey,
-                  progressColor: Colors.red,
-                  currentValue: 80,
+                  progressColor:
+                      budgetData.percent() < 100 ? Colors.green : Colors.red,
+                  currentValue: budgetData.percent(),
                   displayText: '%',
                   displayTextStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
@@ -102,16 +110,20 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               TextButton(
                 onPressed: () {
-                  setState(() {});
                   showModalBottomSheet(
                       context: context, builder: (ctx) => const MonthlyForm());
+                  setState(() {});
                 },
                 child: budget.isEmpty
                     ? const Text(
                         'Budget',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       )
-                    :const Text('input'),
+                    : Text(
+                        '${budget.first.budget} ETB',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 18),
+                      ),
               ),
               const SizedBox(
                 width: 60,

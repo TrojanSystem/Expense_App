@@ -1,7 +1,6 @@
 import 'package:example/model/month_budget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../model/monthly_budget_data.dart';
 
 class MonthlyForm extends StatefulWidget {
@@ -52,8 +51,9 @@ class _MonthlyFormState extends State<MonthlyForm> {
               child: RaisedButton(
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
                     final newMonthlyBudget = MonthlyBudget(budget: budget);
-                    Provider.of<MonthlyBudgetData>(context,listen: false)
+                    Provider.of<MonthlyBudgetData>(context, listen: false)
                         .addMonthlyBudgetList(newMonthlyBudget);
                     Navigator.of(context).pop();
                   }

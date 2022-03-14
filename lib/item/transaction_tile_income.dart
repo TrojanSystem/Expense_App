@@ -20,6 +20,7 @@ class TransactionTileIncome extends StatefulWidget {
 class _TransactionTileIncomeState extends State<TransactionTileIncome> {
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(
@@ -104,7 +105,8 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                         onPressed: () async {
                           Provider.of<TransactionData>(context, listen: false)
                               .deleteExpenseList(widget.expense.id);
-                          double totalMinus = Provider.of<TransactionData>(context,
+                          double totalMinus = Provider.of<TransactionData>(
+                                  context,
                                   listen: false)
                               .minusTotalPrice(
                             double.parse(widget.expense.price),
