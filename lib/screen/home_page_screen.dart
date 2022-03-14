@@ -8,6 +8,7 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../input_form/transaction_form_item.dart';
+import '../item/transaction_tile_expense.dart';
 import '../model/transaction_data.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -21,8 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final budgetData = Provider.of<TransactionData>(context);
-    final budget = Provider.of<MonthlyBudgetData>(context)
-        .monthlyBudgetList;
+    final budget = Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
     budget.isEmpty
         ? Provider.of<TransactionData>(context).monthlyBudget = 0
         : Provider.of<TransactionData>(context).monthlyBudget =
@@ -70,10 +70,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         : ListView.builder(
                             itemCount: data.expenseList.length,
                             itemBuilder: (context, index) {
-                              return TransactionTileIncome(
-                                index: index,
-                                expense: data.expenseList[index],
-                              );
+                              return data.isIncome
+                                  ? TransactionTileIncome(
+                                      index: index,
+                                      expense: data.expenseList[index],
+                                    )
+                                  : TransactionTileExpense(
+                                      index: index,
+                                      expense: data.expenseList[index],
+                                    );
                             },
                           ),
                   ),

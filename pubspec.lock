@@ -156,6 +156,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  font_awesome_flutter:
+    dependency: "direct main"
+    description:
+      name: font_awesome_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "9.2.0"
   http:
     dependency: "direct main"
     description:
@@ -212,6 +219,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  lite_rolling_switch:
+    dependency: "direct main"
+    description:
+      name: lite_rolling_switch
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   matcher:
     dependency: transitive
     description:

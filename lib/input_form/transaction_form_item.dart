@@ -1,7 +1,9 @@
 import 'package:example/model/transaction_data.dart';
 import 'package:example/model/transaction_model.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:provider/provider.dart';
 
 class TransactionForm extends StatefulWidget {
@@ -38,6 +40,28 @@ class _TransactionFormState extends State<TransactionForm> {
       child: Scaffold(
         body: ListView(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                LiteRollingSwitch(
+                  //initial value
+                  value: true,
+                  textOn: 'Income',
+                  textOff: 'Expense',
+                  colorOn: Colors.green[800],
+                  colorOff: Colors.red[800],
+                  iconOn: FontAwesomeIcons.moneyBill,
+                  iconOff: FontAwesomeIcons.moneyBill,
+                  textSize: 16.0,
+                  onChanged: (bool state) {
+                    Provider.of<TransactionData>(context, listen: false)
+                        .updaterChanger();
+
+                  },
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
@@ -126,9 +150,8 @@ class _TransactionFormState extends State<TransactionForm> {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
                     double total =
-                       Provider.of<TransactionData>(context,
-                        listen: false)
-                        .addTotalPrice(double.parse(price));
+                        Provider.of<TransactionData>(context, listen: false)
+                            .addTotalPrice(double.parse(price));
                     final newExpense = TransactionModel(
                       name: name,
                       description: description,

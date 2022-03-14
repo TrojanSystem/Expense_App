@@ -6,6 +6,7 @@ class TransactionData extends ChangeNotifier {
   DatabaseExpense db = DatabaseExpense();
   double totalPrice = 0;
   double monthlyBudget = 0;
+  bool isIncome = false;
   bool _isLoading = true;
 
   List<TransactionModel> _expenseList = [];
@@ -13,6 +14,11 @@ class TransactionData extends ChangeNotifier {
   List<TransactionModel> get expenseList => _expenseList;
 
   bool get isLoading => _isLoading;
+
+  void updaterChanger() {
+    isIncome = !isIncome;
+    //notifyListeners();
+  }
 
   Future loadExpenseList() async {
     _isLoading = true;

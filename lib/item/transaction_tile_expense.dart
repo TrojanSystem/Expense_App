@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class TransactionTileExpense extends StatelessWidget {
-  const TransactionTileExpense({Key key}) : super(key: key);
+import '../input_form/transaction_update_form_item.dart';
+import '../model/transaction_data.dart';
+import '../model/transaction_model.dart';
 
+class TransactionTileExpense extends StatefulWidget {
+  final int index;
+  final TransactionModel expense;
+
+  const TransactionTileExpense({this.expense, this.index});
+
+  @override
+  State<TransactionTileExpense> createState() => _TransactionTileExpenseState();
+}
+
+class _TransactionTileExpenseState extends State<TransactionTileExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,7 +34,6 @@ class TransactionTileExpense extends StatelessWidget {
               ],
             ),
             width: double.infinity,
-
             child: Card(
               clipBehavior: Clip.antiAlias,
               shape: RoundedRectangleBorder(
@@ -41,7 +54,9 @@ class TransactionTileExpense extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          '${DateTime.now().hour.toString()} : ${DateTime.now().minute.toString()}',
+                          DateFormat.jm().format(
+                            DateTime.parse(widget.expense.date),
+                          ),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
@@ -55,11 +70,11 @@ class TransactionTileExpense extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 18.0),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
                         child: Text(
-                          'Input Name',
-                          style: TextStyle(
+                          widget.expense.name,
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -69,7 +84,18 @@ class TransactionTileExpense extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (ctx) => TransactionUpdateForm(
+                                    index: widget.expense.id,
+                                    existedDescription:
+                                        widget.expense.description,
+                                    existedName: widget.expense.name,
+                                    existedPrice: widget.expense.price,
+                                    existedDate: widget.expense.date),
+                              );
+                            },
                             icon: const Icon(
                               Icons.edit,
                               color: Colors.purple,
@@ -77,7 +103,31 @@ class TransactionTileExpense extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Provider.of<TransactionData>(context,
+                                      listen: false)
+                                  .deleteExpenseList(widget.expense.id);
+                              double totalMinus = Provider.of<TransactionData>(
+                                      context,
+                                      listen: false)
+                                  .minusTotalPrice(
+                                double.parse(widget.expense.price),
+                              );
+                              print('Minus $totalMinus');
+                              final updateExpense = TransactionModel(
+                                id: widget.expense.id,
+                                name: widget.expense.name,
+                                description: widget.expense.description,
+                                price: widget.expense.price,
+                                date: widget.expense.date.toString(),
+                                total: totalMinus.toString(),
+                              );
+                              Provider.of<TransactionData>(context,
+                                      listen: false)
+                                  .updateExpenseList(updateExpense);
+
+                              print('index ${widget.expense.id}');
+                            },
                             icon: const Icon(
                               Icons.delete_forever,
                               color: Colors.red,
@@ -105,13 +155,13 @@ class TransactionTileExpense extends StatelessWidget {
               height: 35,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  Icon(
+                children: [
+                  const Icon(
                     Icons.arrow_downward_rounded,
                     size: 25,
                     color: Colors.white,
                   ),
-                  Text(
+                  const Text(
                     'ETB ',
                     style: TextStyle(
                       color: Colors.white,
@@ -120,8 +170,8 @@ class TransactionTileExpense extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '12.5',
-                    style: TextStyle(
+                    widget.expense.price.toString(),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

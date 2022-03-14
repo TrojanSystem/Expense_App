@@ -49,7 +49,8 @@ dependencies:
   url_launcher: ^6.0.18
   sqlbrite: ^2.2.0
   sqflite: any
-
+  lite_rolling_switch: ^0.1.1
+  font_awesome_flutter: ^9.2.0
 
 
 dev_dependencies:
