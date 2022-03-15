@@ -17,8 +17,7 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final monthData = Provider.of<TransactionData>(context)
-        .monthlyBudget;
+    final monthData = Provider.of<TransactionData>(context).monthlyBudget;
     final budget = Provider.of<MonthlyBudgetData>(context, listen: false)
         .monthlyBudgetList;
     budget.isEmpty
@@ -65,10 +64,15 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
                       child: FAProgressBar(
                         backgroundColor: Colors.black12,
                         size: 20,
-                        progressColor: Colors.green,
-                        currentValue: monthData == 0
-                            ? (0).floor()
-                            : xxx.floor(),
+                        progressColor: monthData == 0
+                            ? Colors.green
+                            : xxx.floor() < 75
+                                ? Colors.green
+                                : xxx.floor() < 100
+                                    ? Colors.redAccent
+                                    : Colors.red[800],
+                        currentValue:
+                            monthData == 0 ? (0).floor() : xxx.floor(),
                         displayText: '%',
                         displayTextStyle: const TextStyle(
                           fontWeight: FontWeight.bold,
