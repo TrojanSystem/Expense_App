@@ -51,43 +51,42 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 0,
       ),
       drawer: const DrawerItem(),
-      body: ListView(
-        children: [
-          SizedBox(
-            height: 650,
-            width: double.infinity,
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    color: const Color.fromRGBO(40, 53, 147, 1),
-                    child: const Account(),
-                  ),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Consumer<TransactionData>(
-                    builder: (context, data, child) => data.expenseList.isEmpty
-                        ? const Center(
-                            child: Text(
-                              'Enter Today\'s Transaction',
-                              style: kkStyles,
-                            ),
+      body: SizedBox(
+        height: 650,
+        width: double.infinity,
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                color: const Color.fromRGBO(40, 53, 147, 1),
+                child: const Account(),
+              ),
+            ),
+            Expanded(
+              flex: 7,
+              child: Consumer<TransactionData>(
+                builder: (context, data, child) => data.expenseList.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'Enter Today\'s Transaction',
+                          style: kkStyles,
+                        ),
+                      )
+                    : data.isIncome
+                        ? ListView.builder(
+                            itemCount: data.expenseList.length,
+                            itemBuilder: (context, index) {
+                              return TransactionTileIncome(
+                                index: index,
+                                expense: data.expenseList[index],
+                                listOfExpenses: data.expenseList,
+                              );
+                            },
                           )
-                        : data.isIncome
+                        : data.isExpense
                             ? ListView.builder(
-                                itemCount: data.expenseList.length,
-                                itemBuilder: (context, index) {
-                                  return TransactionTileIncome(
-                                    index: index,
-                                    expense: data.expenseList[index],
-                                    listOfExpenses: data.expenseList,
-                                  );
-                                },
-                              )
-                            : ListView.builder(
                                 itemCount: data.expenseList.length,
                                 itemBuilder: (context, index) {
                                   return TransactionTileExpense(
@@ -96,13 +95,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                     change: data.isIncome,
                                   );
                                 },
+                              )
+                            : const Center(
+                                child: Text(''),
                               ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: const Color.fromRGBO(40, 53, 147, 1),

@@ -8,6 +8,7 @@ class TransactionData extends ChangeNotifier {
   double monthTotalPrice = 0;
   double monthlyBudget = 0;
   bool isIncome = false;
+  bool isExpense = true;
   bool _isLoading = true;
 
   List<TransactionModel> _expenseList = [];
@@ -18,7 +19,8 @@ class TransactionData extends ChangeNotifier {
 
   void updaterChanger(bool state) {
     isIncome = state;
-   // notifyListeners();
+    isExpense = state;
+    // notifyListeners();
   }
 
   Future loadExpenseList() async {
