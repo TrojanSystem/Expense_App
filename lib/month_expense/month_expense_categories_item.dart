@@ -17,6 +17,8 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final monthData = Provider.of<TransactionData>(context)
+        .monthlyBudget;
     final budget = Provider.of<MonthlyBudgetData>(context, listen: false)
         .monthlyBudgetList;
     budget.isEmpty
@@ -31,7 +33,7 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(zz[x]);
     }
-    double xxx = ((sum * 100) / double.parse(budget.first.budget));
+    double xxx = ((sum * 100) / monthData);
 
     return SizedBox(
       width: double.infinity,
@@ -64,7 +66,7 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
                         backgroundColor: Colors.black12,
                         size: 20,
                         progressColor: Colors.green,
-                        currentValue: double.parse(budget.first.budget) == 0
+                        currentValue: monthData == 0
                             ? (0).floor()
                             : xxx.floor(),
                         displayText: '%',

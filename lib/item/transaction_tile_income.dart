@@ -10,8 +10,9 @@ import '../model/transaction_data.dart';
 class TransactionTileIncome extends StatefulWidget {
   final int index;
   final TransactionModel expense;
+  final List listOfExpenses;
 
-  TransactionTileIncome({this.index, this.expense});
+  TransactionTileIncome({this.index, this.expense, this.listOfExpenses});
 
   @override
   State<TransactionTileIncome> createState() => _TransactionTileIncomeState();
@@ -20,6 +21,7 @@ class TransactionTileIncome extends StatefulWidget {
 class _TransactionTileIncomeState extends State<TransactionTileIncome> {
   @override
   Widget build(BuildContext context) {
+
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

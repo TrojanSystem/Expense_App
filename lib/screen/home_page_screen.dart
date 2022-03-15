@@ -21,12 +21,21 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final budgetData = Provider.of<TransactionData>(context);
+    final result = Provider.of<TransactionData>(context).expenseList;
+    var z = result.map((e) => e.price).toList();
+    var sum = 0.0;
+    for (int x = 0; x < z.length; x++) {
+      sum += double.parse(z[x]);
+    }
+    final monthData =
+        Provider.of<TransactionData>(context).monthTotalPrice = sum;
+
     final budget = Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
     budget.isEmpty
         ? Provider.of<TransactionData>(context).monthlyBudget = 0
         : Provider.of<TransactionData>(context).monthlyBudget =
             double.parse(budget.first.budget);
+    final percentage = Provider.of<TransactionData>(context).percent();
 
     return Scaffold(
       appBar: AppBar(
@@ -71,17 +80,16 @@ class _MyHomePageState extends State<MyHomePage> {
                             ? ListView.builder(
                                 itemCount: data.expenseList.length,
                                 itemBuilder: (context, index) {
-                                  print(data.isIncome);
                                   return TransactionTileIncome(
                                     index: index,
                                     expense: data.expenseList[index],
+                                    listOfExpenses: data.expenseList,
                                   );
                                 },
                               )
                             : ListView.builder(
                                 itemCount: data.expenseList.length,
                                 itemBuilder: (context, index) {
-                                  print(data.isIncome);
                                   return TransactionTileExpense(
                                     index: index,
                                     expense: data.expenseList[index],
@@ -111,12 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: FAProgressBar(
                   size: 20,
                   backgroundColor: Colors.grey,
-                  progressColor: budgetData.percent() < 75
+                  progressColor: percentage < 75
                       ? Colors.green
-                      : budgetData.percent() < 100
+                      : percentage < 100
                           ? Colors.redAccent
                           : Colors.red[800],
-                  currentValue: budgetData.percent(),
+                  currentValue: percentage,
                   displayText: '%',
                   displayTextStyle: const TextStyle(
                     fontWeight: FontWeight.bold,

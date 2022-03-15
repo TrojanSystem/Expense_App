@@ -1,6 +1,9 @@
 import 'package:example/model/transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
+import 'package:provider/provider.dart';
+
+import '../model/transaction_data.dart';
 
 class ExpenseCategoriesItem extends StatelessWidget {
   final List listOfExpense;
@@ -13,6 +16,12 @@ class ExpenseCategoriesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final result =Provider.of<TransactionData>(context).expenseList;
+    var zzzz =result.map((e) => e.price).toList();
+    var sumTotalprice = 0.0;
+    for (int x = 0; x < zzzz.length; x++) {
+      sumTotalprice += double.parse(zzzz[x]);
+    }
     var y = listOfExpense.map((e) => e.name).toSet().toList();
     int ccc =DateTime.now().day;
     var yy = listOfExpense.map((e) => DateTime.parse(e.date).day).toSet().toList();
@@ -23,10 +32,10 @@ class ExpenseCategoriesItem extends StatelessWidget {
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(zz[x]);
     }
-    print('This is yy ${yy.first} $ccc');
-    // print('This is y $y');
-    print('sum is $sum');
-    print('total is $totalPrice');
+    // print('This is yy ${yy.first} $ccc');
+    // // print('This is y $y');
+    // print('sum is $sum');
+    // print('total is $totalPrice');
     return SizedBox(
       width: double.infinity,
       //color: Colors.blue,
@@ -58,9 +67,9 @@ class ExpenseCategoriesItem extends StatelessWidget {
                         backgroundColor: Colors.black12,
                         size: 20,
                         progressColor: Colors.green,
-                        currentValue: totalPrice == 0
+                        currentValue: sumTotalprice == 0
                             ? (0).floor()
-                            : ((sum * 100) / totalPrice).floor(),
+                            : ((sum * 100) / sumTotalprice).floor(),
                         displayText: '%',
                         displayTextStyle: const TextStyle(
                           fontWeight: FontWeight.bold,

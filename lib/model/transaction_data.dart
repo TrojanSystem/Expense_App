@@ -5,6 +5,7 @@ import '../database/expense_database.dart';
 class TransactionData extends ChangeNotifier {
   DatabaseExpense db = DatabaseExpense();
   double totalPrice = 0;
+  double monthTotalPrice = 0;
   double monthlyBudget = 0;
   bool isIncome = false;
   bool _isLoading = true;
@@ -80,7 +81,7 @@ class TransactionData extends ChangeNotifier {
       double percentage = 0;
       return percentage.floor();
     } else {
-      double percentage = ((totalPrice * 100) / monthlyBudget);
+      double percentage = ((monthTotalPrice * 100) / monthlyBudget);
       return percentage.floor();
     }
   }

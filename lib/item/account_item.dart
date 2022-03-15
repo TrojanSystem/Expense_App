@@ -10,6 +10,14 @@ class Account extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final result = Provider.of<TransactionData>(context).expenseList;
+
+    var z =result.map((e) => e.price).toList();
+    var sum = 0.0;
+    for (int x = 0; x < z.length; x++) {
+      sum += double.parse(z[x]);
+    }
+
 
     return Consumer<TransactionData>(
       builder:(context,data,child)=>Column(
@@ -19,7 +27,7 @@ class Account extends StatelessWidget {
             children: [
               const Income(),
               Container(width: 2, height: 100, color: Colors.white54),
-               Expense(dailyExpense:data.update().toStringAsFixed(2)),
+               Expense(dailyExpense:sum.toStringAsFixed(2)),
             ],
           ),
           Row(
@@ -33,7 +41,7 @@ class Account extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                data.update().toStringAsFixed(2),
+                sum.toStringAsFixed(2),
                 style: const TextStyle(color: Colors.white, fontSize: 20),
               ),
             ],
