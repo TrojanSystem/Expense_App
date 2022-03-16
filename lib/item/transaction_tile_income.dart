@@ -21,8 +21,8 @@ class TransactionTileIncome extends StatefulWidget {
 class _TransactionTileIncomeState extends State<TransactionTileIncome> {
   @override
   Widget build(BuildContext context) {
-
-
+    var yy = widget.listOfExpenses.map((e) => DateTime.parse(e.date).day).toSet().toList();
+    print('Tile $yy');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(
@@ -59,7 +59,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                           width: 10,
                         ),
                         Text(
-                          DateFormat.jm().format(
+                          DateFormat.E().add_jm().format(
                             DateTime.parse(widget.expense.date),
                           ),
                           style: const TextStyle(

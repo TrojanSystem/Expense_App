@@ -8,6 +8,11 @@ class ExpenseCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final result =Provider.of<TransactionData>(context).expenseList;
+    var newDateList = result
+        .where((element) =>
+    DateTime.parse(element.date).day == DateTime.now().day)
+        .toList();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -27,7 +32,7 @@ class ExpenseCategories extends StatelessWidget {
           final filter = Provider.of<TransactionData>(context).expenseList;
           final length = filter.map((e) => e.name).toSet().toList();
           return ListView.builder(
-            itemCount: length.length,
+            itemCount: newDateList.length,
             itemBuilder: (context, index) {
               return ExpenseCategoriesItem(
                 listOfExpense: file.expenseList,

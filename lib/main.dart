@@ -1,4 +1,3 @@
-import 'package:example/model/transaction_model.dart';
 import 'package:example/screen/home_page_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
