@@ -13,6 +13,7 @@ class ExpenseCategories extends StatelessWidget {
         .where((element) =>
     DateTime.parse(element.date).day == DateTime.now().day)
         .toList();
+    var y = newDateList.map((e) => e.name).toSet().toList();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -32,13 +33,14 @@ class ExpenseCategories extends StatelessWidget {
           final filter = Provider.of<TransactionData>(context).expenseList;
           final length = filter.map((e) => e.name).toSet().toList();
           return ListView.builder(
-            itemCount: newDateList.length,
-            itemBuilder: (context, index) {
+            itemCount: y.length,
+            itemBuilder: (context, indexs) {
+
               return ExpenseCategoriesItem(
                 listOfExpense: file.expenseList,
-                expense: file.expenseList[index],
+                expense: file.expenseList[indexs],
                 totalPrice : totPrice,
-                index: index,
+                index: indexs,
               );
             },
           );

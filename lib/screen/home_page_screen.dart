@@ -76,31 +76,28 @@ class _MyHomePageState extends State<MyHomePage> {
                               style: kkStyles,
                             ),
                           )
-                        : data.isIncome
-                            ? ListView.builder(
-                                itemCount: data.expenseList.length,
-                                itemBuilder: (context, index) {
-                                  return TransactionTileIncome(
-                                    index: index,
-                                    expense: data.expenseList[index],
-                                    listOfExpenses: data.expenseList,
-                                  );
-                                },
-                              )
-                            : data.isExpense
-                                ? ListView.builder(
-                                    itemCount: data.expenseList.length,
-                                    itemBuilder: (context, index) {
-                                      return TransactionTileExpense(
-                                        index: index,
-                                        expense: data.expenseList[index],
-                                        change: data.isIncome,
-                                      );
-                                    },
-                                  )
-                                : const Center(
-                                    child: Text(''),
-                                  ),
+                        : ListView.builder(
+                            itemCount: data.expenseList.length,
+                            itemBuilder: (context, index) {
+                              return
+                                  TransactionTileIncome(
+                                      index: index,
+                                      expense: data.expenseList[index],
+                                      listOfExpenses: data.expenseList,
+                                    );
+
+                            },
+                          ),
+                    // : ListView.builder(
+                    //     itemCount: data.expenseList.length,
+                    //     itemBuilder: (context, index) {
+                    //       return TransactionTileExpense(
+                    //         index: index,
+                    //         expense: data.expenseList[index],
+                    //
+                    //       );
+                    //     },
+                    //   ),
                   ),
                 ),
               ],

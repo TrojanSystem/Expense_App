@@ -9,9 +9,9 @@ import '../model/transaction_model.dart';
 class TransactionTileExpense extends StatefulWidget {
   final int index;
   final TransactionModel expense;
-  final bool change;
 
-   TransactionTileExpense({this.expense, this.index,this.change});
+
+   TransactionTileExpense({this.expense, this.index});
 
   @override
   State<TransactionTileExpense> createState() => _TransactionTileExpenseState();
@@ -114,7 +114,7 @@ class _TransactionTileExpenseState extends State<TransactionTileExpense> {
                                   .minusTotalPrice(
                                 double.parse(widget.expense.price),
                               );
-                              print('Minus $totalMinus');
+
                               final updateExpense = TransactionModel(
                                 id: widget.expense.id,
                                 name: widget.expense.name,
@@ -127,7 +127,7 @@ class _TransactionTileExpenseState extends State<TransactionTileExpense> {
                                       listen: false)
                                   .updateExpenseList(updateExpense);
 
-                              print('index ${widget.expense.id}');
+
                             },
                             icon: const Icon(
                               Icons.delete_forever,

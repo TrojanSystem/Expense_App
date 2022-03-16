@@ -22,7 +22,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
   @override
   Widget build(BuildContext context) {
     var yy = widget.listOfExpenses.map((e) => DateTime.parse(e.date).day).toSet().toList();
-    print('Tile $yy');
+    // print('Tile $yy');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(

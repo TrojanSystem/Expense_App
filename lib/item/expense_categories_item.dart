@@ -29,6 +29,7 @@ class ExpenseCategoriesItem extends StatelessWidget {
     }
 
     var y = newDateList.map((e) => e.name).toSet().toList();
+
     int ccc =DateTime.now().day;
     var yy = listOfExpense.map((e) => DateTime.parse(e.date).day).toSet().toList();
     var x = newDateList.where((e) => e.name.toString() == y[index]).toList();
@@ -38,7 +39,7 @@ class ExpenseCategoriesItem extends StatelessWidget {
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(zz[x]);
     }
-    print('This is yy $zzzz');
+    // print('This is yy $zzzz');
     // // print('This is y $y');
     // print('sum is $sum');
     // print('total is $totalPrice');
