@@ -6,7 +6,8 @@ import '../constants.dart';
 import '../month_expense/month_expense_categories.dart';
 
 class DrawerItem extends StatelessWidget {
-  const DrawerItem({Key key}) : super(key: key);
+  final int selectedDayExpenses;
+   DrawerItem({this.selectedDayExpenses});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class DrawerItem extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (ctx) => const ExpenseCategories(),
+                            builder: (ctx) => ExpenseCategories(passedIntExpense: selectedDayExpenses),
                           ),
                         );
                       },

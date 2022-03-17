@@ -43,7 +43,7 @@ class Income extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '12.5',
+                  '0.0',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,

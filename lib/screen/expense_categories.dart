@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseCategories extends StatelessWidget {
-  const ExpenseCategories({Key key}) : super(key: key);
+  final int passedIntExpense;
+   ExpenseCategories({this.passedIntExpense});
 
   @override
   Widget build(BuildContext context) {
     final result =Provider.of<TransactionData>(context).expenseList;
     var newDateList = result
         .where((element) =>
-    DateTime.parse(element.date).day == DateTime.now().day)
+    DateTime.parse(element.date).day == passedIntExpense)
         .toList();
     var y = newDateList.map((e) => e.name).toSet().toList();
     return Scaffold(
@@ -37,6 +38,7 @@ class ExpenseCategories extends StatelessWidget {
             itemBuilder: (context, indexs) {
 
               return ExpenseCategoriesItem(
+                recievedIntExpenses:passedIntExpense,
                 listOfExpense: file.expenseList,
                 expense: file.expenseList[indexs],
                 totalPrice : totPrice,

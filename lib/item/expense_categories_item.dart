@@ -6,20 +6,21 @@ import 'package:provider/provider.dart';
 import '../model/transaction_data.dart';
 
 class ExpenseCategoriesItem extends StatelessWidget {
+  final int recievedIntExpenses;
   final List listOfExpense;
   final TransactionModel expense;
   double totalPrice;
   final int index;
 
   ExpenseCategoriesItem(
-      {this.listOfExpense, this.index, this.expense, this.totalPrice});
+      {this.listOfExpense, this.index, this.expense, this.totalPrice,this.recievedIntExpenses});
 
   @override
   Widget build(BuildContext context) {
     final result =Provider.of<TransactionData>(context).expenseList;
     var newDateList = result
         .where((element) =>
-    DateTime.parse(element.date).day == DateTime.now().day)
+    DateTime.parse(element.date).day == recievedIntExpenses)
         .toList();
 
     var zzzz =newDateList.map((e) => e.price).toList();

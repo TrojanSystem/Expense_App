@@ -19,8 +19,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int selectedDayOfMonth = DateTime.now().day;
+
   @override
   Widget build(BuildContext context) {
+    final daysInAMonth = Provider.of<TransactionData>(context).daysOfMonth;
+    final daysFilterList = Provider.of<TransactionData>(context).expenseList;
+    var todayFilteredList = daysFilterList
+        .where(
+            (element) => DateTime.parse(element.date).day == selectedDayOfMonth)
+        .toList();
     final result = Provider.of<TransactionData>(context).expenseList;
     var z = result.map((e) => e.price).toList();
     var sum = 0.0;
@@ -46,11 +54,33 @@ class _MyHomePageState extends State<MyHomePage> {
             fontSize: 22,
           ),
         ),
-        centerTitle: true,
         backgroundColor: const Color.fromRGBO(40, 53, 147, 1),
         elevation: 0,
+        actions: [
+          DropdownButton(
+            dropdownColor: Colors.grey[850],
+            menuMaxHeight: 200,
+            value: selectedDayOfMonth,
+            items: daysInAMonth
+                .map(
+                  (e) => DropdownMenuItem(
+                    child: Text(
+                      e['mon'],
+                      style: kkDropDown,
+                    ),
+                    value: e['day'],
+                  ),
+                )
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                selectedDayOfMonth = value;
+              });
+            },
+          ),
+        ],
       ),
-      drawer: const DrawerItem(),
+      drawer:  DrawerItem(selectedDayExpenses: selectedDayOfMonth),
       body: ListView(
         children: [
           SizedBox(
@@ -63,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   flex: 2,
                   child: Container(
                     color: const Color.fromRGBO(40, 53, 147, 1),
-                    child: const Account(),
+                    child:  Account(selectedDayExpenses: selectedDayOfMonth),
                   ),
                 ),
                 Expanded(
@@ -77,15 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           )
                         : ListView.builder(
-                            itemCount: data.expenseList.length,
+                            itemCount: todayFilteredList.length,
                             itemBuilder: (context, index) {
-                              return
-                                  TransactionTileIncome(
-                                      index: index,
-                                      expense: data.expenseList[index],
-                                      listOfExpenses: data.expenseList,
-                                    );
-
+                              return TransactionTileIncome(
+                                index: index,
+                                expense: todayFilteredList[index],
+                                listOfExpenses: data.expenseList,
+                              );
                             },
                           ),
                     // : ListView.builder(

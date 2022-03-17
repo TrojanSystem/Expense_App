@@ -4,15 +4,21 @@ import 'package:provider/provider.dart';
 import 'expense.dart';
 import 'income.dart';
 
-class Account extends StatelessWidget {
-  const Account({Key key}) : super(key: key);
+class Account extends StatefulWidget {
+  int selectedDayExpenses = 1;
+   Account({this.selectedDayExpenses});
 
+  @override
+  State<Account> createState() => _AccountState();
+}
+
+class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     final result = Provider.of<TransactionData>(context).expenseList;
     var zz = result
         .where(
-            (element) => DateTime.parse(element.date).day == DateTime.now().day)
+            (element) => DateTime.parse(element.date).day == widget.selectedDayExpenses)
         .toList();
 
     var totalExpenses = result.map((e) => e.price).toList();
