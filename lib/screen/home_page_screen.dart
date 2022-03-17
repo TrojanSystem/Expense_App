@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Transaction',
+          'Transactions',
           style: TextStyle(
             letterSpacing: 1.1,
             fontSize: 22,
