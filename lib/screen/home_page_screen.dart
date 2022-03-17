@@ -8,7 +8,6 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../input_form/transaction_form_item.dart';
-import '../item/transaction_tile_expense.dart';
 import '../model/transaction_data.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -59,7 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           DropdownButton(
             dropdownColor: Colors.grey[850],
-            menuMaxHeight: 200,
+            iconEnabledColor: Colors.white,
+            menuMaxHeight: 300,
             value: selectedDayOfMonth,
             items: daysInAMonth
                 .map(
@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      drawer:  DrawerItem(selectedDayExpenses: selectedDayOfMonth),
+      drawer: DrawerItem(selectedDayExpenses: selectedDayOfMonth),
       body: ListView(
         children: [
           SizedBox(
@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   flex: 2,
                   child: Container(
                     color: const Color.fromRGBO(40, 53, 147, 1),
-                    child:  Account(selectedDayExpenses: selectedDayOfMonth),
+                    child: Account(selectedDayExpenses: selectedDayOfMonth),
                   ),
                 ),
                 Expanded(
