@@ -6,7 +6,8 @@ import 'income.dart';
 
 class Account extends StatefulWidget {
   int selectedDayExpenses = 1;
-   Account({this.selectedDayExpenses});
+
+  Account({this.selectedDayExpenses});
 
   @override
   State<Account> createState() => _AccountState();
@@ -17,16 +18,24 @@ class _AccountState extends State<Account> {
   Widget build(BuildContext context) {
     final result = Provider.of<TransactionData>(context).expenseList;
     var zz = result
-        .where(
-            (element) => DateTime.parse(element.date).day == widget.selectedDayExpenses)
+        .where((element) =>
+            DateTime.parse(element.date).day == widget.selectedDayExpenses)
         .toList();
-
-    var totalExpenses = result.map((e) => e.price).toList();
+    var zzz = zz.where((element) => element.isIncome == false).toList();
+    var isIncome = zz.where((element) => element.isIncome == true).toList();
+    print('true list $isIncome');
+    print('false list $zzz');
+    var totalIncome = isIncome.map((e) => e.price).toList();
+    var totIncomeSum = 0.0;
+    for (int xx = 0; xx < totalIncome.length; xx++) {
+      totIncomeSum += double.parse(totalIncome[xx]);
+    }
+    var totalExpenses = zzz.map((e) => e.price).toList();
     var totSum = 0.0;
     for (int xx = 0; xx < totalExpenses.length; xx++) {
       totSum += double.parse(totalExpenses[xx]);
     }
-    var z = zz.map((e) => e.price).toList();
+    var z = zzz.map((e) => e.price).toList();
     var sum = 0.0;
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(z[x]);
@@ -38,7 +47,7 @@ class _AccountState extends State<Account> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Income(),
+              Income(dailyIncome:totIncomeSum.toStringAsFixed(2)),
               Container(width: 2, height: 100, color: Colors.white54),
               Expense(dailyExpense: totSum.toStringAsFixed(2)),
             ],

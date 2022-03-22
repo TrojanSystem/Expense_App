@@ -19,6 +19,7 @@ class _TransactionFormState extends State<TransactionForm> {
   String name = '';
   String price = '';
   DateTime date = DateTime.now();
+  int checkIsIncome = 0;
 
   void showDate() {
     showDatePicker(
@@ -55,9 +56,15 @@ class _TransactionFormState extends State<TransactionForm> {
                   iconOff: FontAwesomeIcons.moneyBill,
                   textSize: 16.0,
                   onChanged: (bool state) {
-
-                    Provider.of<TransactionData>(context, listen: false)
-                        .updaterChanger(state);
+                    if (state == false) {
+                      checkIsIncome = 0;
+                      print(checkIsIncome);
+                    } else {
+                      checkIsIncome = 1;
+                      print(checkIsIncome);
+                    }
+                    // Provider.of<TransactionData>(context, listen: false)
+                    //     .updaterChanger(state);
                   },
                 ),
               ],
@@ -151,8 +158,9 @@ class _TransactionFormState extends State<TransactionForm> {
                     _formKey.currentState.save();
                     double total =
                         Provider.of<TransactionData>(context, listen: false)
-                            .addTotalPrice(double.parse(price));
+                            .addTotalPrice(double.parse(price),checkIsIncome);
                     final newExpense = TransactionModel(
+                      isIncome: checkIsIncome == 1 ? true : false,
                       name: name,
                       description: description,
                       price: price,

@@ -18,12 +18,16 @@ class ExpenseCategoriesItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final result =Provider.of<TransactionData>(context).expenseList;
-    var newDateList = result
+    var newDateExpenseList = result
         .where((element) =>
     DateTime.parse(element.date).day == recievedIntExpenses)
         .toList();
+    var newDateList = newDateExpenseList
+        .where((element) =>
+    element.isIncome == false)
+        .toList();
 
-    var zzzz =newDateList.map((e) => e.price).toList();
+    var zzzz = newDateList.map((e) => e.price).toList();
     var sumTotalprice = 0.0;
     for (int x = 0; x < zzzz.length; x++) {
       sumTotalprice += double.parse(zzzz[x]);

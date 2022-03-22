@@ -10,13 +10,14 @@ class TransactionUpdateForm extends StatefulWidget {
   String existedName;
   String existedPrice;
   String existedDate;
+  bool existedIsIncome;
 
   TransactionUpdateForm(
       {this.existedName,
       this.existedPrice,
       this.existedDate,
       this.index,
-      this.existedDescription});
+      this.existedDescription,this.existedIsIncome});
 
   @override
   State<TransactionUpdateForm> createState() => _TransactionUpdateFormState();
@@ -143,7 +144,7 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                         Provider.of<TransactionData>(context, listen: false)
                             .updateTotalPrice(
                       double.parse(widget.existedPrice),
-                      double.parse(updatedPrice),
+                      double.parse(updatedPrice),widget.existedIsIncome
                     );
                     print('updated value $total');
                     final updateExpense = TransactionModel(

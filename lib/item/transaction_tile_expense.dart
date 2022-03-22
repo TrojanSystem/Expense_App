@@ -10,8 +10,7 @@ class TransactionTileExpense extends StatefulWidget {
   final int index;
   final TransactionModel expense;
 
-
-   TransactionTileExpense({this.expense, this.index});
+  TransactionTileExpense({this.expense, this.index});
 
   @override
   State<TransactionTileExpense> createState() => _TransactionTileExpenseState();
@@ -57,8 +56,8 @@ class _TransactionTileExpenseState extends State<TransactionTileExpense> {
                         ),
                         Text(
                           DateFormat.E().add_jm().format(
-                            DateTime.parse(widget.expense.date),
-                          ),
+                                DateTime.parse(widget.expense.date),
+                              ),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
@@ -87,6 +86,7 @@ class _TransactionTileExpenseState extends State<TransactionTileExpense> {
                           showModalBottomSheet(
                             context: context,
                             builder: (ctx) => TransactionUpdateForm(
+                                existedIsIncome: widget.expense.isIncome,
                                 index: widget.expense.id,
                                 existedDescription: widget.expense.description,
                                 existedName: widget.expense.name,
@@ -105,11 +105,11 @@ class _TransactionTileExpenseState extends State<TransactionTileExpense> {
                           Provider.of<TransactionData>(context, listen: false)
                               .deleteExpenseList(widget.expense.id);
                           double totalMinus = Provider.of<TransactionData>(
-                              context,
-                              listen: false)
+                                  context,
+                                  listen: false)
                               .minusTotalPrice(
-                            double.parse(widget.expense.price),
-                          );
+                                  double.parse(widget.expense.price),
+                                  widget.expense.isIncome);
                           print('Minus $totalMinus');
                           final updateExpense = TransactionModel(
                             id: widget.expense.id,
@@ -142,7 +142,7 @@ class _TransactionTileExpenseState extends State<TransactionTileExpense> {
             left: 20,
             child: Container(
               decoration: BoxDecoration(
-                color:Colors.red,
+                color: Colors.red,
                 borderRadius: BorderRadius.circular(10),
               ),
               width: 150,

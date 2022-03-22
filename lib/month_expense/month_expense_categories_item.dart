@@ -19,10 +19,15 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final monthFilterList = Provider.of<TransactionData>(context).expenseList;
-    var todayFilteredList = monthFilterList
+    var todayExpenseFilteredList = monthFilterList
         .where(
             (element) => DateTime.parse(element.date).month == selectedMonthOfYear)
         .toList();
+    var todayFilteredList = todayExpenseFilteredList
+        .where(
+            (element) => element.isIncome == false)
+        .toList();
+
     final monthData = Provider.of<TransactionData>(context).monthlyBudget;
     final budget = Provider.of<MonthlyBudgetData>(context, listen: false)
         .monthlyBudgetList;

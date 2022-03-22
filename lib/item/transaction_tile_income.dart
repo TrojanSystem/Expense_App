@@ -21,7 +21,10 @@ class TransactionTileIncome extends StatefulWidget {
 class _TransactionTileIncomeState extends State<TransactionTileIncome> {
   @override
   Widget build(BuildContext context) {
-    var yy = widget.listOfExpenses.map((e) => DateTime.parse(e.date).day).toSet().toList();
+    var yy = widget.listOfExpenses
+        .map((e) => DateTime.parse(e.date).day)
+        .toSet()
+        .toList();
     // print('Tile $yy');
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -60,8 +63,8 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                         ),
                         Text(
                           DateFormat.E().add_jm().format(
-                            DateTime.parse(widget.expense.date),
-                          ),
+                                DateTime.parse(widget.expense.date),
+                              ),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
@@ -91,6 +94,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                             context: context,
                             builder: (ctx) => TransactionUpdateForm(
                                 index: widget.expense.id,
+                                existedIsIncome: widget.expense.isIncome,
                                 existedDescription: widget.expense.description,
                                 existedName: widget.expense.name,
                                 existedPrice: widget.expense.price,
@@ -111,10 +115,11 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                                   context,
                                   listen: false)
                               .minusTotalPrice(
-                            double.parse(widget.expense.price),
-                          );
+                                  double.parse(widget.expense.price),
+                                  widget.expense.isIncome);
                           print('Minus $totalMinus');
                           final updateExpense = TransactionModel(
+                            isIncome: widget.expense.isIncome,
                             id: widget.expense.id,
                             name: widget.expense.name,
                             description: widget.expense.description,
@@ -144,7 +149,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
             left: 20,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: widget.expense.isIncome ? Colors.green : Colors.red,
                 borderRadius: BorderRadius.circular(10),
               ),
               width: 150,

@@ -30,7 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
             (element) => DateTime.parse(element.date).day == selectedDayOfMonth)
         .toList();
     final result = Provider.of<TransactionData>(context).expenseList;
-    var z = result.map((e) => e.price).toList();
+    var zExpense = result.where((element) => element.isIncome == false).toList();
+    var z = zExpense.map((e) => e.price).toList();
     var sum = 0.0;
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(z[x]);
@@ -113,16 +114,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         : ListView.builder(
                             itemCount: todayFilteredList.length,
                             itemBuilder: (context, index) {
-                              return data.isIncome
-                                  ? TransactionTileIncome(
+                              return  TransactionTileIncome(
                                       index: index,
                                       expense: todayFilteredList[index],
                                       listOfExpenses: data.expenseList,
-                                    )
-                                  : TransactionTileExpense(
-                                      index: index,
-                                      expense: todayFilteredList[index],
                                     );
+
                             },
                           ),
                     // : ListView.builder(

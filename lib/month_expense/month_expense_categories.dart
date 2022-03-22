@@ -19,9 +19,13 @@ class _MonthExpenseCategoriesState extends State<MonthExpenseCategories> {
   Widget build(BuildContext context) {
     final monthSelected = Provider.of<TransactionData>(context).monthOfAYear;
     final monthFilterList = Provider.of<TransactionData>(context).expenseList;
-    var todayFilteredList = monthFilterList
+    var todayFilteredExpenseList = monthFilterList
         .where(
             (element) => DateTime.parse(element.date).month == selectedMonth)
+        .toList();
+    var todayFilteredList = todayFilteredExpenseList
+        .where(
+            (element) => element.isIncome == false)
         .toList();
     return Scaffold(
       appBar: AppBar(
