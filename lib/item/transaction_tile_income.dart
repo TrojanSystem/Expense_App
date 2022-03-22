@@ -156,8 +156,8 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Icon(
-                    Icons.arrow_downward_rounded,
+                   Icon(
+                    widget.expense.isIncome ?  Icons.arrow_downward_rounded:Icons.arrow_upward_rounded,
                     size: 25,
                     color: Colors.white,
                   ),
