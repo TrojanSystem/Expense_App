@@ -11,12 +11,18 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
   final TransactionModel expense;
   final double totalPrice;
   final int index;
+  final int selectedMonthOfYear;
 
   MonthExpenseCategoriesItem(
-      {this.listOfExpense, this.index, this.expense, this.totalPrice});
+      {this.listOfExpense, this.index, this.expense, this.totalPrice,this.selectedMonthOfYear});
 
   @override
   Widget build(BuildContext context) {
+    final monthFilterList = Provider.of<TransactionData>(context).expenseList;
+    var todayFilteredList = monthFilterList
+        .where(
+            (element) => DateTime.parse(element.date).month == selectedMonthOfYear)
+        .toList();
     final monthData = Provider.of<TransactionData>(context).monthlyBudget;
     final budget = Provider.of<MonthlyBudgetData>(context, listen: false)
         .monthlyBudgetList;
@@ -24,8 +30,8 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
         ? Provider.of<TransactionData>(context, listen: false).monthlyBudget = 0
         : Provider.of<TransactionData>(context, listen: false).monthlyBudget =
             double.parse(budget.first.budget);
-    var y = listOfExpense.map((e) => e.name).toSet().toList();
-    var x = listOfExpense.where((e) => e.name.toString() == y[index]).toList();
+    var y = todayFilteredList.map((e) => e.name).toSet().toList();
+    var x = todayFilteredList.where((e) => e.name.toString() == y[index]).toList();
     var z = x.map((e) => e.name).toList();
     var zz = x.map((e) => e.price).toList();
     var sum = 0.0;

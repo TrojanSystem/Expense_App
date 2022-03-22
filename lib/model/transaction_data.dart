@@ -8,7 +8,7 @@ class TransactionData extends ChangeNotifier {
   double monthTotalPrice = 0;
   double monthlyBudget = 0;
   bool isIncome = false;
-  bool isExpense = true;
+
   bool _isLoading = true;
 
   List<TransactionModel> _expenseList = [];
@@ -19,8 +19,7 @@ class TransactionData extends ChangeNotifier {
 
   void updaterChanger(bool state) {
     isIncome = state;
-    isExpense = state;
-    // notifyListeners();
+  //  notifyListeners();
   }
 
   Future loadExpenseList() async {
@@ -87,6 +86,7 @@ class TransactionData extends ChangeNotifier {
       return percentage.floor();
     }
   }
+
   List daysOfMonth = [
     {
       'mon': 'Day 1',
@@ -94,7 +94,7 @@ class TransactionData extends ChangeNotifier {
     },
     {
       'mon': 'Day 2',
-      'day':2 ,
+      'day': 2,
     },
     {
       'mon': 'Day 3',
@@ -102,7 +102,7 @@ class TransactionData extends ChangeNotifier {
     },
     {
       'mon': 'Day 4',
-      'day':4,
+      'day': 4,
     },
     {
       'mon': 'Day 5',
@@ -114,7 +114,7 @@ class TransactionData extends ChangeNotifier {
     },
     {
       'mon': 'Day 7',
-      'day':7,
+      'day': 7,
     },
     {
       'mon': 'Day 8',
@@ -122,7 +122,7 @@ class TransactionData extends ChangeNotifier {
     },
     {
       'mon': 'Day 9',
-      'day':9,
+      'day': 9,
     },
     {
       'mon': 'Day 10',
@@ -138,7 +138,7 @@ class TransactionData extends ChangeNotifier {
     },
     {
       'mon': 'Day 13',
-      'day':13,
+      'day': 13,
     },
     {
       'mon': 'Day 14',
@@ -146,7 +146,7 @@ class TransactionData extends ChangeNotifier {
     },
     {
       'mon': 'Day 15',
-      'day':15,
+      'day': 15,
     },
     {
       'mon': 'Day 16',
@@ -154,7 +154,7 @@ class TransactionData extends ChangeNotifier {
     },
     {
       'mon': 'Day 17',
-      'day':17,
+      'day': 17,
     },
     {
       'mon': 'Day 18',
@@ -166,7 +166,7 @@ class TransactionData extends ChangeNotifier {
     },
     {
       'mon': 'Day 20',
-      'day':20,
+      'day': 20,
     },
     {
       'mon': 'Day 21',
@@ -182,7 +182,7 @@ class TransactionData extends ChangeNotifier {
     },
     {
       'mon': 'Day 24',
-      'day':24,
+      'day': 24,
     },
     {
       'mon': 'Day 25',
@@ -194,26 +194,74 @@ class TransactionData extends ChangeNotifier {
     },
     {
       'mon': 'Day 27',
-      'day':27,
+      'day': 27,
     },
     {
       'mon': 'Day 28',
-      'day':28,
+      'day': 28,
     },
     {
       'mon': 'Day 29',
-      'day':29,
+      'day': 29,
     },
     {
       'mon': 'Day 30',
-      'day':30,
+      'day': 30,
     },
-
     {
       'mon': 'Day 31',
       'day': 31,
     },
   ];
 
-
+  List monthOfAYear = [
+    {
+      'mon': 'Jan',
+      'day': 1,
+    },
+    {
+      'mon': 'Feb',
+      'day': 2,
+    },
+    {
+      'mon': 'Mar',
+      'day': 3,
+    },
+    {
+      'mon': 'Apr',
+      'day': 4,
+    },
+    {
+      'mon': 'May',
+      'day': 5,
+    },
+    {
+      'mon': 'Jun',
+      'day': 6,
+    },
+    {
+      'mon': 'Jul',
+      'day': 7,
+    },
+    {
+      'mon': 'Aug',
+      'day': 8,
+    },
+    {
+      'mon': 'Sept',
+      'day': 9,
+    },
+    {
+      'mon': 'Oct',
+      'day': 10,
+    },
+    {
+      'mon': 'Nov',
+      'day': 11,
+    },
+    {
+      'mon': 'Dec',
+      'day': 12,
+    },
+  ];
 }

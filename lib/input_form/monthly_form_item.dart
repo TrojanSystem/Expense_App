@@ -52,7 +52,10 @@ class _MonthlyFormState extends State<MonthlyForm> {
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    final newMonthlyBudget = MonthlyBudget(budget: budget);
+                    final newMonthlyBudget = MonthlyBudget(
+                      budget: budget,
+                      date: DateTime.now().toString(),
+                    );
                     Provider.of<MonthlyBudgetData>(context, listen: false)
                         .addMonthlyBudgetList(newMonthlyBudget);
                     Navigator.of(context).pop();

@@ -46,7 +46,7 @@ class _TransactionFormState extends State<TransactionForm> {
               children: [
                 LiteRollingSwitch(
                   //initial value
-                  value: true,
+                  value: false,
                   textOn: 'Income',
                   textOff: 'Expense',
                   colorOn: Colors.green[800],

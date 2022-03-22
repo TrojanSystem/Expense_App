@@ -21,7 +21,7 @@ class DrawerItem extends StatelessWidget {
               width: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.purple, Colors.red],
+                    colors: [Colors.purple, Colors.red,],
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft),
               ),
