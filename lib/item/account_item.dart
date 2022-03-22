@@ -23,8 +23,6 @@ class _AccountState extends State<Account> {
         .toList();
     var zzz = zz.where((element) => element.isIncome == false).toList();
     var isIncome = zz.where((element) => element.isIncome == true).toList();
-    print('true list $isIncome');
-    print('false list $zzz');
     var totalIncome = isIncome.map((e) => e.price).toList();
     var totIncomeSum = 0.0;
     for (int xx = 0; xx < totalIncome.length; xx++) {

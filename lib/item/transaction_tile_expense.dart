@@ -110,7 +110,7 @@ class _TransactionTileExpenseState extends State<TransactionTileExpense> {
                               .minusTotalPrice(
                                   double.parse(widget.expense.price),
                                   widget.expense.isIncome);
-                          print('Minus $totalMinus');
+
                           final updateExpense = TransactionModel(
                             id: widget.expense.id,
                             name: widget.expense.name,
@@ -122,7 +122,7 @@ class _TransactionTileExpenseState extends State<TransactionTileExpense> {
                           Provider.of<TransactionData>(context, listen: false)
                               .updateExpenseList(updateExpense);
 
-                          print('index ${widget.expense.id}');
+
                         },
                         icon: const Icon(
                           Icons.delete_forever,

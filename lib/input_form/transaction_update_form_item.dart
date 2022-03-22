@@ -146,7 +146,7 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                       double.parse(widget.existedPrice),
                       double.parse(updatedPrice),widget.existedIsIncome
                     );
-                    print('updated value $total');
+
                     final updateExpense = TransactionModel(
                       id: widget.index,
                       name: updatedName,

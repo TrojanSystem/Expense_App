@@ -1,6 +1,5 @@
 import 'package:example/screen/expense_categories.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../month_expense/month_expense_categories.dart';
