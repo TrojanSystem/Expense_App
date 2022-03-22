@@ -151,7 +151,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                 color: widget.expense.isIncome ? Colors.green : Colors.red,
                 borderRadius: BorderRadius.circular(10),
               ),
-              width: 150,
+              width: 120,
               height: 35,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -28,7 +28,9 @@ class _AccountState extends State<Account> {
     for (int xx = 0; xx < totalIncome.length; xx++) {
       totIncomeSum += double.parse(totalIncome[xx]);
     }
-    var totalExpenses = zzz.map((e) => e.price).toList();
+    var totExpe = result.where((element) => element.isIncome == false).toList();
+    print(totExpe);
+    var totalExpenses = totExpe.map((e) => e.price).toList();
     var totSum = 0.0;
     for (int xx = 0; xx < totalExpenses.length; xx++) {
       totSum += double.parse(totalExpenses[xx]);
