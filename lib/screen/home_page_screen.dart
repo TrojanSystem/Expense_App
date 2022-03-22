@@ -8,6 +8,7 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../input_form/transaction_form_item.dart';
+import '../item/transaction_tile_expense.dart';
 import '../model/transaction_data.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -29,7 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
             (element) => DateTime.parse(element.date).day == selectedDayOfMonth)
         .toList();
     final result = Provider.of<TransactionData>(context).expenseList;
-    var z = result.map((e) => e.price).toList();
+    var zExpense = result.where((element) => element.isIncome == false).toList();
+    var z = zExpense.map((e) => e.price).toList();
     var sum = 0.0;
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(z[x]);
@@ -38,16 +40,19 @@ class _MyHomePageState extends State<MyHomePage> {
         Provider.of<TransactionData>(context).monthTotalPrice = sum;
 
     final budget = Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
-    budget.isEmpty
+    final dateFilter = budget.where((element) =>
+        DateTime.parse(element.date).month == DateTime.now().month);
+
+    dateFilter.isEmpty
         ? Provider.of<TransactionData>(context).monthlyBudget = 0
         : Provider.of<TransactionData>(context).monthlyBudget =
-            double.parse(budget.first.budget);
+            double.parse(dateFilter.last.budget);
     final percentage = Provider.of<TransactionData>(context).percent();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Transactions',
+          'Transaction',
           style: TextStyle(
             letterSpacing: 1.1,
             fontSize: 22,
@@ -109,11 +114,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         : ListView.builder(
                             itemCount: todayFilteredList.length,
                             itemBuilder: (context, index) {
-                              return TransactionTileIncome(
-                                index: index,
-                                expense: todayFilteredList[index],
-                                listOfExpenses: data.expenseList,
-                              );
+                              return  TransactionTileIncome(
+                                      index: index,
+                                      expense: todayFilteredList[index],
+                                      listOfExpenses: data.expenseList,
+                                    );
+
                             },
                           ),
                     // : ListView.builder(
@@ -167,13 +173,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       context: context, builder: (ctx) => const MonthlyForm());
                   setState(() {});
                 },
-                child: budget.isEmpty
+                child: dateFilter.isEmpty
                     ? const Text(
                         'Budget',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       )
                     : Text(
-                        '${budget.first.budget} ETB',
+                        '${dateFilter.last.budget} ETB',
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18),
                       ),

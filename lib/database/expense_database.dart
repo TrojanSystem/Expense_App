@@ -8,7 +8,7 @@ class DatabaseExpense {
       join(await getDatabasesPath(), 'expenseList.db'),
       onCreate: (db, version) async {
         await db.execute(
-          '''CREATE TABLE expenseList(id INTEGER PRIMARY KEY, name TEXT, price TEXT, date TEXT, total TEXT, description TEXT)''',
+          '''CREATE TABLE expenseList(id INTEGER PRIMARY KEY, name TEXT, price TEXT, date TEXT, isIncome int, total TEXT, description TEXT)''',
         );
       },
       version: 1,

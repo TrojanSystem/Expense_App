@@ -10,9 +10,13 @@ class ExpenseCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final result =Provider.of<TransactionData>(context).expenseList;
-    var newDateList = result
+    var newDateExpenseList = result
         .where((element) =>
     DateTime.parse(element.date).day == passedIntExpense)
+        .toList();
+    var newDateList = newDateExpenseList
+        .where((element) =>
+    element.isIncome == false)
         .toList();
     var y = newDateList.map((e) => e.name).toSet().toList();
     return Scaffold(
