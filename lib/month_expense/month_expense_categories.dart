@@ -38,7 +38,7 @@ class _MonthExpenseCategoriesState extends State<MonthExpenseCategories> {
                 end: Alignment.topLeft),
           ),
         ),
-        title: const Text('Monthly Expense Tracker'),
+        title: const Text('Monthly Expense'),
         actions: [
           DropdownButton(
             dropdownColor: Colors.grey[850],
