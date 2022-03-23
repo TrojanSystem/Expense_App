@@ -22,7 +22,7 @@ class _AccountState extends State<Account> {
             DateTime.parse(element.date).day == widget.selectedDayExpenses)
         .toList();
     var zzz = zz.where((element) => element.isIncome == false).toList();
-    var isIncome = zz.where((element) => element.isIncome == true).toList();
+    var isIncome = result.where((element) => element.isIncome == true).toList();
     var totalIncome = isIncome.map((e) => e.price).toList();
     var totIncomeSum = 0.0;
     for (int xx = 0; xx < totalIncome.length; xx++) {

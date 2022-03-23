@@ -27,7 +27,7 @@ class _MonthExpenseCategoriesState extends State<MonthExpenseCategories> {
         .where(
             (element) => element.isIncome == false)
         .toList();
-    return Scaffold(
+    return Scaffold(backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         flexibleSpace: Container(
