@@ -2,11 +2,13 @@ import 'package:example/screen/expense_categories.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../expense_tracker/expense_categories.dart';
 import '../month_expense/month_expense_categories.dart';
 
 class DrawerItem extends StatelessWidget {
   final int selectedDayExpenses;
-   DrawerItem({this.selectedDayExpenses});
+
+  DrawerItem({this.selectedDayExpenses});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +21,10 @@ class DrawerItem extends StatelessWidget {
             child: Container(
               width: double.infinity,
               decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.purple, Colors.red,],
-                    begin: Alignment.bottomRight,
-                    end: Alignment.topLeft),
+                gradient: LinearGradient(colors: [
+                  Colors.purple,
+                  Colors.red,
+                ], begin: Alignment.bottomRight, end: Alignment.topLeft),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -31,13 +33,30 @@ class DrawerItem extends StatelessWidget {
                   children: [
                     TextButton(
                       child: const Text(
+                        'Expense Tracker',
+                        style: kkExpense,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) =>  const ExpenseCategory(),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextButton(
+                      child: const Text(
                         'Daily Expense',
                         style: kkExpense,
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (ctx) => ExpenseCategories(passedIntExpense: selectedDayExpenses),
+                            builder: (ctx) => ExpenseCategories(
+                                passedIntExpense: selectedDayExpenses),
                           ),
                         );
                       },

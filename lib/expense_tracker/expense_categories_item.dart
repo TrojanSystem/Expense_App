@@ -3,42 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:provider/provider.dart';
 
+import '../model/monthly_budget_data.dart';
 import '../model/transaction_data.dart';
 
-class ExpenseCategoriesItem extends StatelessWidget {
-  final int recievedIntExpenses;
-  final List listOfExpense;
-  final TransactionModel expense;
-  double totalPrice;
+class ExpenseCategoryItems extends StatelessWidget {
   final int index;
+  final TransactionModel expense;
 
-  ExpenseCategoriesItem(
-      {this.listOfExpense,
-      this.index,
-      this.expense,
-      this.totalPrice,
-      this.recievedIntExpenses});
+  ExpenseCategoryItems({
+    this.expense,
+    this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
     final result = Provider.of<TransactionData>(context).expenseList;
-    var newDateExpenseList = result
-        .where((element) =>
-            DateTime.parse(element.date).day == recievedIntExpenses)
-        .toList();
-    var newDateList = newDateExpenseList
-        .where((element) => element.isIncome == false)
-        .toList();
+    var totExpe = result.where((element) => element.isIncome == false).toList();
 
-    var zzzz = newDateList.map((e) => e.price).toList();
-    var sumTotalprice = 0.0;
-    for (int x = 0; x < zzzz.length; x++) {
-      sumTotalprice += double.parse(zzzz[x]);
+    var totalExpenses = totExpe.map((e) => e.price).toList();
+    var totSum = 0.0;
+    for (int xx = 0; xx < totalExpenses.length; xx++) {
+      totSum += double.parse(totalExpenses[xx]);
     }
 
-    var y = newDateList.map((e) => e.name).toSet().toList();
+    var y = totExpe.map((e) => e.name).toSet().toList();
 
-    var x = newDateList.where((e) => e.name.toString() == y[index]).toList();
+    var x = totExpe.where((e) => e.name.toString() == y[index]).toList();
     var z = x.map((e) => e.name).toList();
     var zz = x.map((e) => e.price).toList();
     var sum = 0.0;
@@ -77,9 +67,9 @@ class ExpenseCategoriesItem extends StatelessWidget {
                         backgroundColor: Colors.black12,
                         size: 20,
                         progressColor: Colors.green,
-                        currentValue: sumTotalprice == 0
+                        currentValue: totSum == 0
                             ? (0).floor()
-                            : ((sum * 100) / sumTotalprice).floor(),
+                            : ((sum * 100) / totSum).floor(),
                         displayText: '%',
                         displayTextStyle: const TextStyle(
                           fontWeight: FontWeight.bold,
@@ -94,8 +84,7 @@ class ExpenseCategoriesItem extends StatelessWidget {
             padding: const EdgeInsets.only(right: 18.0),
             child: IconButton(
               onPressed: () {
-                Provider.of<TransactionData>(context, listen: false)
-                    .deleteExpenseList(expense.id);
+                Provider.of<TransactionData>(context,listen: false).deleteExpenseList(expense.id);
               },
               icon: const Icon(
                 Icons.cancel_outlined,

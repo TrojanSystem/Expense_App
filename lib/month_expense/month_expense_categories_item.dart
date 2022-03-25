@@ -14,18 +14,21 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
   final int selectedMonthOfYear;
 
   MonthExpenseCategoriesItem(
-      {this.listOfExpense, this.index, this.expense, this.totalPrice,this.selectedMonthOfYear});
+      {this.listOfExpense,
+      this.index,
+      this.expense,
+      this.totalPrice,
+      this.selectedMonthOfYear});
 
   @override
   Widget build(BuildContext context) {
     final monthFilterList = Provider.of<TransactionData>(context).expenseList;
     var todayExpenseFilteredList = monthFilterList
-        .where(
-            (element) => DateTime.parse(element.date).month == selectedMonthOfYear)
+        .where((element) =>
+            DateTime.parse(element.date).month == selectedMonthOfYear)
         .toList();
     var todayFilteredList = todayExpenseFilteredList
-        .where(
-            (element) => element.isIncome == false)
+        .where((element) => element.isIncome == false)
         .toList();
 
     final monthData = Provider.of<TransactionData>(context).monthlyBudget;
@@ -36,7 +39,8 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
         : Provider.of<TransactionData>(context, listen: false).monthlyBudget =
             double.parse(budget.first.budget);
     var y = todayFilteredList.map((e) => e.name).toSet().toList();
-    var x = todayFilteredList.where((e) => e.name.toString() == y[index]).toList();
+    var x =
+        todayFilteredList.where((e) => e.name.toString() == y[index]).toList();
     var z = x.map((e) => e.name).toList();
     var zz = x.map((e) => e.price).toList();
     var sum = 0.0;
@@ -97,7 +101,10 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 18.0),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<TransactionData>(context, listen: false)
+                    .deleteExpenseList(expense.id);
+              },
               icon: const Icon(
                 Icons.cancel_outlined,
                 color: Colors.red,

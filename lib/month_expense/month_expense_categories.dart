@@ -15,19 +15,20 @@ class MonthExpenseCategories extends StatefulWidget {
 
 class _MonthExpenseCategoriesState extends State<MonthExpenseCategories> {
   int selectedMonth = DateTime.now().month;
+
   @override
   Widget build(BuildContext context) {
     final monthSelected = Provider.of<TransactionData>(context).monthOfAYear;
     final monthFilterList = Provider.of<TransactionData>(context).expenseList;
     var todayFilteredExpenseList = monthFilterList
-        .where(
-            (element) => DateTime.parse(element.date).month == selectedMonth)
+        .where((element) => DateTime.parse(element.date).month == selectedMonth)
         .toList();
     var todayFilteredList = todayFilteredExpenseList
-        .where(
-            (element) => element.isIncome == false)
+        .where((element) => element.isIncome == false)
         .toList();
-    return Scaffold(backgroundColor: Colors.white,
+    var y = todayFilteredList.map((e) => e.name).toSet().toList();
+    return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         flexibleSpace: Container(
@@ -48,13 +49,13 @@ class _MonthExpenseCategoriesState extends State<MonthExpenseCategories> {
             items: monthSelected
                 .map(
                   (e) => DropdownMenuItem(
-                child: Text(
-                  e['mon'],
-                  style: kkDropDown,
-                ),
-                value: e['day'],
-              ),
-            )
+                    child: Text(
+                      e['mon'],
+                      style: kkDropDown,
+                    ),
+                    value: e['day'],
+                  ),
+                )
                 .toList(),
             onChanged: (value) {
               setState(() {
@@ -67,13 +68,12 @@ class _MonthExpenseCategoriesState extends State<MonthExpenseCategories> {
       body: Consumer<TransactionData>(
         builder: (context, file, child) {
           final totPrice = Provider.of<TransactionData>(context).totalPrice;
-          final filter = Provider.of<TransactionData>(context).expenseList;
-          final length = filter.map((e) => e.name).toSet().toList();
+
           return ListView.builder(
-            itemCount: todayFilteredList.length,
+            itemCount: y.length,
             itemBuilder: (context, index) {
               return MonthExpenseCategoriesItem(
-                selectedMonthOfYear:selectedMonth,
+                selectedMonthOfYear: selectedMonth,
                 listOfExpense: file.expenseList,
                 expense: file.expenseList[index],
                 totalPrice: totPrice,
