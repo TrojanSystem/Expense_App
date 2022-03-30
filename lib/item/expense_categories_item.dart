@@ -48,12 +48,11 @@ class ExpenseCategoriesItem extends StatelessWidget {
 
     return SizedBox(
       width: double.infinity,
-      //color: Colors.blue,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 18.0),
+            margin: const EdgeInsets.only(left: 18.0,bottom: 10),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

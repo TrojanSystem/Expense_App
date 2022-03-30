@@ -52,6 +52,7 @@ dependencies:
   lite_rolling_switch: ^0.1.1
   font_awesome_flutter: ^9.2.0
   grouped_list: ^4.2.0
+  slimy_card: ^1.0.4
 
 
 dev_dependencies:

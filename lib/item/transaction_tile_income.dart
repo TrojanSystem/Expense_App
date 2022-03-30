@@ -21,13 +21,8 @@ class TransactionTileIncome extends StatefulWidget {
 class _TransactionTileIncomeState extends State<TransactionTileIncome> {
   @override
   Widget build(BuildContext context) {
-    var yy = widget.listOfExpenses
-        .map((e) => DateTime.parse(e.date).day)
-        .toSet()
-        .toList();
-    // print('Tile $yy');
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+       return Padding(
+      padding: const EdgeInsets.fromLTRB(8,8.0,8,0),
       child: Stack(
         children: [
           Container(
@@ -41,7 +36,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
               ],
             ),
             width: double.infinity,
-            height: 140,
+            height: 110,
             child: Card(
               clipBehavior: Clip.antiAlias,
               shape: RoundedRectangleBorder(
@@ -53,11 +48,11 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 15, 8),
+                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 15, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const Icon(Icons.access_time_filled_rounded),
+                        const Icon(Icons.access_time_filled_rounded,size: 20,),
                         const SizedBox(
                           width: 10,
                         ),
@@ -67,7 +62,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                               ),
                           style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 20,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -80,7 +75,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                       widget.expense.name,
                       style: const TextStyle(
                         color: Colors.black,
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -104,7 +99,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                         icon: const Icon(
                           Icons.edit,
                           color: Colors.purple,
-                          size: 30,
+                          size: 20,
                         ),
                       ),
                       IconButton(
@@ -134,7 +129,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                         icon: const Icon(
                           Icons.delete_forever,
                           color: Colors.red,
-                          size: 30,
+                          size: 20,
                         ),
                       ),
                     ],
@@ -152,20 +147,20 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                 borderRadius: BorderRadius.circular(10),
               ),
               width: 120,
-              height: 35,
+              height: 25,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                    Icon(
                     widget.expense.isIncome ?  Icons.arrow_downward_rounded:Icons.arrow_upward_rounded,
-                    size: 25,
+                    size: 20,
                     color: Colors.white,
                   ),
                   const Text(
                     'ETB ',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -173,7 +168,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                     widget.expense.price.toString(),
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
