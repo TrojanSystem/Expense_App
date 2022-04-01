@@ -1,4 +1,5 @@
 import 'package:example/screen/expense_categories.dart';
+import 'package:example/summary/summry_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -15,15 +16,26 @@ class DrawerItem extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          Expanded(flex: 1, child: Container()),
+          const Expanded(
+            flex: 1,
+            child: Center(
+              child: Text(
+                'Personal Expense',
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 30,
+                ),
+              ),
+            ),
+          ),
           Expanded(
             flex: 3,
             child: Container(
               width: double.infinity,
-              decoration: const BoxDecoration(
+              decoration:  BoxDecoration(
                 gradient: LinearGradient(colors: [
-                  Colors.purple,
-                  Colors.red,
+                  const Color.fromRGBO(40, 53, 147, 1),
+                  const Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9),
                 ], begin: Alignment.bottomRight, end: Alignment.topLeft),
               ),
               child: Padding(
@@ -31,22 +43,6 @@ class DrawerItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextButton(
-                      child: const Text(
-                        'Expense Tracker',
-                        style: kkExpense,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (ctx) =>  const ExpenseCategory(),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
                     TextButton(
                       child: const Text(
                         'Daily Expense',
@@ -66,13 +62,45 @@ class DrawerItem extends StatelessWidget {
                     ),
                     TextButton(
                       child: const Text(
-                        'Monthly Expense',
+                        'Expense Tracker',
+                        style: kkExpense,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => const ExpenseCategory(),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextButton(
+                      child: const Text(
+                        'Monthly Percentage',
                         style: kkExpense,
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (ctx) => const MonthExpenseCategories(),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextButton(
+                      child: const Text(
+                        'Yearly Analysis',
+                        style: kkExpense,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => const SummaryScreen(),
                           ),
                         );
                       },

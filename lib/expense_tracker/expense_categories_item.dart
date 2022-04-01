@@ -29,26 +29,36 @@ class _ExpenseCategoryItemsState extends State<ExpenseCategoryItems> {
   Widget build(BuildContext context) {
     final result = Provider.of<TransactionData>(context).expenseList;
     var totExpe = result.where((element) => element.isIncome == false).toList();
-
-    var totalExpenses = totExpe.map((e) => e.price).toList();
+    var monthExpenseFilter = totExpe
+        .where((element) =>
+            DateTime.parse(element.date).month == DateTime.now().month)
+        .toList();
+    var totalExpenses = monthExpenseFilter.map((e) => e.price).toList();
     var totSum = 0.0;
     for (int xx = 0; xx < totalExpenses.length; xx++) {
       totSum += double.parse(totalExpenses[xx]);
     }
 
-    var y = totExpe.map((e) => e.name).toSet().toList();
+    var y = monthExpenseFilter.map((e) => e.name).toSet().toList();
 
-    var x = totExpe.where((e) => e.name.toString() == y[widget.index]).toList();
+    var x = monthExpenseFilter
+        .where((e) => e.name.toString() == y[widget.index])
+        .toList();
     var z = x.map((e) => e.name).toList();
     var zz = x.map((e) => e.price).toList();
     var sum = 0.0;
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(zz[x]);
     }
-    final detail = result
+
+    var detailMonthFilter = result
+        .where((element) =>
+            DateTime.parse(element.date).month == DateTime.now().month)
+        .toList();
+    final detail = detailMonthFilter
         .where((element) => element.name.toString() == y[widget.index])
         .toList();
-    print(detail);
+
     return SizedBox(
       width: double.infinity,
       //color: Colors.blue,
@@ -79,18 +89,6 @@ class _ExpenseCategoryItemsState extends State<ExpenseCategoryItems> {
                       ? 245
                       : 250,
               width: isExpanded ? 345 : 350,
-              // decoration: BoxDecoration(
-              //   color: const Color(0xff6F12E8),
-              //   borderRadius: const BorderRadius.all(Radius.circular(20)),
-              //   boxShadow: [
-              //     BoxShadow(
-              //       color: const Color(0xff6F12E8).withOpacity(0.5),
-              //       blurRadius: 20,
-              //       offset: const Offset(0, 10),
-              //     ),
-              //   ],
-              // ),
-              //margin: const EdgeInsets.only(left: 10.0,),
               child: isTapped
                   ? Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0.0),

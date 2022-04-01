@@ -25,12 +25,19 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final daysInAMonth = Provider.of<TransactionData>(context).daysOfMonth;
     final daysFilterList = Provider.of<TransactionData>(context).expenseList;
-    var todayFilteredList = daysFilterList
+    var todayMonthFilteredList = daysFilterList
+        .where((element) =>
+            DateTime.parse(element.date).month == DateTime.now().month)
+        .toList();
+    var todayFilteredList = todayMonthFilteredList
         .where(
             (element) => DateTime.parse(element.date).day == selectedDayOfMonth)
         .toList();
-    final result = Provider.of<TransactionData>(context).expenseList;
-    var zExpense = result.where((element) => element.isIncome == false).toList();
+
+    var zExpense = todayMonthFilteredList
+        .where((element) => element.isIncome == false)
+        .toList();
+
     var z = zExpense.map((e) => e.price).toList();
     var sum = 0.0;
     for (int x = 0; x < z.length; x++) {
@@ -114,12 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         : ListView.builder(
                             itemCount: todayFilteredList.length,
                             itemBuilder: (context, index) {
-                              return  TransactionTileIncome(
-                                      index: index,
-                                      expense: todayFilteredList[index],
-                                      listOfExpenses: data.expenseList,
-                                    );
-
+                              return TransactionTileIncome(
+                                index: index,
+                                expense: todayFilteredList[index],
+                                listOfExpenses: data.expenseList,
+                              );
                             },
                           ),
                     // : ListView.builder(

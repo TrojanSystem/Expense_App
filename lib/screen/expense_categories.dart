@@ -23,11 +23,11 @@ class ExpenseCategories extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.purple, Colors.red],
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Color.fromRGBO(40, 53, 147, 1),
+              Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9),
+            ], begin: Alignment.bottomRight, end: Alignment.topLeft),
           ),
         ),
         title: const Text('Daily Expense Tracker'),

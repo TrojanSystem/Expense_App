@@ -17,18 +17,31 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     final result = Provider.of<TransactionData>(context).expenseList;
-    var zz = result
+    var todayMonthFilteredList = result
+        .where((element) =>
+            DateTime.parse(element.date).month == DateTime.now().month)
+        .toList();
+    var zz = todayMonthFilteredList
         .where((element) =>
             DateTime.parse(element.date).day == widget.selectedDayExpenses)
         .toList();
     var zzz = zz.where((element) => element.isIncome == false).toList();
     var isIncome = result.where((element) => element.isIncome == true).toList();
-    var totalIncome = isIncome.map((e) => e.price).toList();
+    var totInc = isIncome
+        .where((element) =>
+            DateTime.parse(element.date).month == DateTime.now().month)
+        .toList();
+    var totalIncome = totInc.map((e) => e.price).toList();
     var totIncomeSum = 0.0;
     for (int xx = 0; xx < totalIncome.length; xx++) {
       totIncomeSum += double.parse(totalIncome[xx]);
     }
-    var totExpe = result.where((element) => element.isIncome == false).toList();
+    var monthExpenseFilter =
+        result.where((element) => element.isIncome == false).toList();
+    var totExpe = monthExpenseFilter
+        .where((element) =>
+            DateTime.parse(element.date).month == DateTime.now().month)
+        .toList();
 
     var totalExpenses = totExpe.map((e) => e.price).toList();
     var totSum = 0.0;
@@ -47,7 +60,7 @@ class _AccountState extends State<Account> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Income(dailyIncome:totIncomeSum.toStringAsFixed(2)),
+              Income(dailyIncome: totIncomeSum.toStringAsFixed(2)),
               Container(width: 2, height: 100, color: Colors.white54),
               Expense(dailyExpense: totSum.toStringAsFixed(2)),
             ],

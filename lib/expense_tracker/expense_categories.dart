@@ -20,19 +20,22 @@ class _ExpenseCategoryState extends State<ExpenseCategory> {
   Widget build(BuildContext context) {
     final result = Provider.of<TransactionData>(context).expenseList;
     var totExpe = result.where((element) => element.isIncome == false).toList();
-
-    var y = totExpe.map((e) => e.name).toSet().toList();
+    var monthExpenseFilter = totExpe
+        .where((element) =>
+            DateTime.parse(element.date).month == DateTime.now().month)
+        .toList();
+    var y = monthExpenseFilter.map((e) => e.name).toSet().toList();
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.purple, Colors.red],
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Color.fromRGBO(40, 53, 147, 1),
+              Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9),
+            ], begin: Alignment.bottomRight, end: Alignment.topLeft),
           ),
         ),
         title: const Text('Expense Tracker'),

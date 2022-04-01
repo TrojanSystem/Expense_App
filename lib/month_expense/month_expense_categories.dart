@@ -32,9 +32,10 @@ class _MonthExpenseCategoriesState extends State<MonthExpenseCategories> {
       appBar: AppBar(
         elevation: 0,
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
+          decoration:  BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.purple, Colors.red],
+                colors: [    Color.fromRGBO(40, 53, 147, 1),
+                  Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9)],
                 begin: Alignment.bottomRight,
                 end: Alignment.topLeft),
           ),
