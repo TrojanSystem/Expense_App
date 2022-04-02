@@ -1,7 +1,6 @@
 import 'package:example/model/transaction_data.dart';
 import 'package:example/summary/summary_item.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -59,7 +58,7 @@ class SummaryScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: Text(
-                      DateTime.parse(filtereByYear.last.date).year.toString(),
+                      DateTime.now().year.toString(),
                       style: kkSummaryStyle,
                     ),
                   ),

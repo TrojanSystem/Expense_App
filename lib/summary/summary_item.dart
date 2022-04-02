@@ -277,7 +277,7 @@ class _SummaryItemState extends State<SummaryItem> {
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 15.0),
+                                  padding: const EdgeInsets.only(left: 10.0),
                                   child: TextButton(
                                     onPressed: () {
                                       Navigator.of(context).push(
