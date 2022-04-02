@@ -109,11 +109,11 @@ class _SummaryItemState extends State<SummaryItem> {
               curve: Curves.fastLinearToSlowEaseIn,
               height: isTapped
                   ? isExpanded
-                      ? 80
-                      : 85
+                      ? 90
+                      : 95
                   : isExpanded
-                      ? 155
-                      : 170,
+                      ? 175
+                      : 180,
               width: isExpanded ? 345 : 350,
               child: isTapped
                   ? Row(
@@ -200,7 +200,7 @@ class _SummaryItemState extends State<SummaryItem> {
                               flex: 1,
                               child: Container(
                                 padding: const EdgeInsets.only(
-                                    top: 25, bottom: 25, left: 5),
+                                    top: 25, bottom: 20, left: 5),
                                 child: Center(
                                   child: Text(
                                     monthOfYear[widget.index],
@@ -283,14 +283,16 @@ class _SummaryItemState extends State<SummaryItem> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (_) => SummaryIncomeList(
-                                              month: monthOfYear[widget.index]),
+                                            month: monthOfYear[widget.index],
+                                          ),
                                         ),
                                       );
                                     },
                                     child: const Text(
                                       'Income Detail',
                                       style: TextStyle(
-                                        fontSize: 20,color: Colors.white,
+                                        fontSize: 20,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.w900,
                                       ),
                                     ),
@@ -311,7 +313,8 @@ class _SummaryItemState extends State<SummaryItem> {
                                     },
                                     child: const Text(
                                       'Expense Detail',
-                                      style: TextStyle(color: Colors.white,
+                                      style: TextStyle(
+                                        color: Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.w900,
                                       ),
@@ -326,7 +329,7 @@ class _SummaryItemState extends State<SummaryItem> {
                         ),
                       ],
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     ),
             ),
           ),

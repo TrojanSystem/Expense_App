@@ -16,7 +16,12 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
-    final result = Provider.of<TransactionData>(context).expenseList;
+    final yearFilter = Provider.of<TransactionData>(context).expenseList;
+    final result = yearFilter
+        .where((element) =>
+    DateTime.parse(element.date).year == DateTime.now().year)
+        .toList();
+
     var todayMonthFilteredList = result
         .where((element) =>
             DateTime.parse(element.date).month == DateTime.now().month)

@@ -21,7 +21,11 @@ class ExpenseCategoriesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final result = Provider.of<TransactionData>(context).expenseList;
+    final yearFilter = Provider.of<TransactionData>(context).expenseList;
+    final result = yearFilter
+        .where((element) =>
+    DateTime.parse(element.date).year == DateTime.now().year)
+        .toList();
     var newDateExpenseList = result
         .where((element) =>
             DateTime.parse(element.date).day == recievedIntExpenses)

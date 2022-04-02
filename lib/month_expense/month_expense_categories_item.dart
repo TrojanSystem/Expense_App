@@ -22,7 +22,11 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final monthFilterList = Provider.of<TransactionData>(context).expenseList;
+    final yearFilter = Provider.of<TransactionData>(context).expenseList;
+    final monthFilterList = yearFilter
+        .where((element) =>
+            DateTime.parse(element.date).year == DateTime.now().year)
+        .toList();
     var todayExpenseFilteredList = monthFilterList
         .where((element) =>
             DateTime.parse(element.date).month == selectedMonthOfYear)
@@ -56,7 +60,7 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 18.0,bottom: 10),
+            margin: const EdgeInsets.only(left: 18.0, bottom: 10),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

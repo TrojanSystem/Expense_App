@@ -24,7 +24,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final daysInAMonth = Provider.of<TransactionData>(context).daysOfMonth;
-    final daysFilterList = Provider.of<TransactionData>(context).expenseList;
+    final daysFilterListInYear =
+        Provider.of<TransactionData>(context).expenseList;
+    final daysFilterList = daysFilterListInYear
+        .where((element) =>
+            DateTime.parse(element.date).year == DateTime.now().year)
+        .toList();
     var todayMonthFilteredList = daysFilterList
         .where((element) =>
             DateTime.parse(element.date).month == DateTime.now().month)
@@ -46,7 +51,11 @@ class _MyHomePageState extends State<MyHomePage> {
     final monthData =
         Provider.of<TransactionData>(context).monthTotalPrice = sum;
 
-    final budget = Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
+    final monthBudgetInYear = Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
+    final budget = monthBudgetInYear
+        .where((element) =>
+    DateTime.parse(element.date).year == DateTime.now().year)
+        .toList();
     final dateFilter = budget.where((element) =>
         DateTime.parse(element.date).month == DateTime.now().month);
 

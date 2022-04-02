@@ -18,7 +18,11 @@ class _ExpenseCategoryState extends State<ExpenseCategory> {
 
   @override
   Widget build(BuildContext context) {
-    final result = Provider.of<TransactionData>(context).expenseList;
+    final yearFilter = Provider.of<TransactionData>(context).expenseList;
+    final result = yearFilter
+        .where((element) =>
+    DateTime.parse(element.date).year == DateTime.now().year)
+        .toList();
     var totExpe = result.where((element) => element.isIncome == false).toList();
     var monthExpenseFilter = totExpe
         .where((element) =>
