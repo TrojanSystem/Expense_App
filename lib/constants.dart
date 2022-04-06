@@ -30,7 +30,7 @@ const kkDropDown = TextStyle(
 const kkSummaryStyle = TextStyle(
   color: Colors.black,
   fontWeight: FontWeight.w900,
-  fontSize: 30,
+  fontSize: 40,
 );
 const kkSummaryIncomeStyle = TextStyle(
   color: Colors.black,

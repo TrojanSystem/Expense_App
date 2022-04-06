@@ -5,16 +5,22 @@ import 'package:provider/provider.dart';
 
 import '../constants.dart';
 
-class SummaryScreen extends StatelessWidget {
+class SummaryScreen extends StatefulWidget {
   const SummaryScreen({Key key}) : super(key: key);
+
+  @override
+  State<SummaryScreen> createState() => _SummaryScreenState();
+}
+
+class _SummaryScreenState extends State<SummaryScreen> {
+  int currentYear = DateTime.now().year;
 
   @override
   Widget build(BuildContext context) {
     final summaryData = Provider.of<TransactionData>(context).expenseList;
 
     final filtereByYear = summaryData
-        .where((element) =>
-            DateTime.parse(element.date).year == DateTime.now().year)
+        .where((element) => DateTime.parse(element.date).year == currentYear)
         .toList();
 
     var isIncome =
@@ -35,6 +41,7 @@ class SummaryScreen extends StatelessWidget {
     for (int xx = 0; xx < totalExpenses.length; xx++) {
       totExpenseSum += double.parse(totalExpenses[xx]);
     }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -55,12 +62,45 @@ class SummaryScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: Text(
-                      DateTime.now().year.toString(),
-                      style: kkSummaryStyle,
-                    ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            currentYear -= 1;
+                            print(currentYear);
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                          size: 35,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          currentYear.toString(),
+                          style: kkSummaryStyle,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            currentYear = currentYear + 1;
+                            print(currentYear);
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.white,
+                          size: 35,
+                        ),
+                      ),
+                    ],
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                   ),
                   Padding(
                     padding:
@@ -115,6 +155,7 @@ class SummaryScreen extends StatelessWidget {
               itemCount: 12,
               itemBuilder: (context, index) {
                 return SummaryItem(
+                  currentYear: currentYear,
                   index: index,
                 );
               },

@@ -9,8 +9,9 @@ import '../model/transaction_data.dart';
 
 class SummaryItem extends StatefulWidget {
   final int index;
+  final int currentYear;
 
-  SummaryItem({this.index});
+  SummaryItem({this.index, this.currentYear});
 
   @override
   State<SummaryItem> createState() => _SummaryItemState();
@@ -40,7 +41,7 @@ class _SummaryItemState extends State<SummaryItem> {
     ];
     final filtereByYear = summaryDataList
         .where((element) =>
-            DateTime.parse(element.date).year == DateTime.now().year)
+            DateTime.parse(element.date).year == widget.currentYear)
         .toList();
     var monthSummaryExpenseList =
         filtereByYear.where((element) => element.isIncome == false).toList();
