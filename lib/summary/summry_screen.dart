@@ -14,6 +14,8 @@ class SummaryScreen extends StatefulWidget {
 
 class _SummaryScreenState extends State<SummaryScreen> {
   int currentYear = DateTime.now().year;
+  double totalSumation = 0.00;
+  bool isNegative = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,17 @@ class _SummaryScreenState extends State<SummaryScreen> {
     for (int xx = 0; xx < totalExpenses.length; xx++) {
       totExpenseSum += double.parse(totalExpenses[xx]);
     }
+    double totalSummary(double totExpenseSum, double totIncomeSum) {
+      totalSumation = totIncomeSum - totExpenseSum;
+      if (totalSumation < 0) {
+        totalSumation = totalSumation * (-1);
+        isNegative = true;
+        return totalSumation;
+      } else {
+        isNegative = false;
+        return totalSumation;
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +61,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back),
         ),
         backgroundColor: const Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9),
         elevation: 0,
@@ -68,7 +81,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
                         onPressed: () {
                           setState(() {
                             currentYear -= 1;
-                            print(currentYear);
                           });
                         },
                         icon: const Icon(
@@ -88,7 +100,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
                         onPressed: () {
                           setState(() {
                             currentYear = currentYear + 1;
-                            print(currentYear);
                           });
                         },
                         icon: const Icon(
@@ -122,15 +133,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 30.0, right: 30, top: 18),
-                    child: Container(
-                      width: double.infinity,
-                      height: 2,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 30.0, right: 30, top: 18),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -141,6 +143,37 @@ class _SummaryScreenState extends State<SummaryScreen> {
                         Text(
                           totExpenseSum.toStringAsFixed(2),
                           style: kkSummaryIncomeStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 30.0, right: 30, top: 10),
+                    child: Container(
+                      width: double.infinity,
+                      height: 2,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 30.0, right: 30, top: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Total',
+                          style: kkSummaryIncomeStyle,
+                        ),
+                        Text(
+                          totalSummary(totExpenseSum, totIncomeSum)
+                              .toStringAsFixed(2),
+                          style: TextStyle(
+                            color: isNegative ? Colors.red : Colors.green,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20,
+                          ),
                         ),
                       ],
                     ),

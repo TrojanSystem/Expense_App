@@ -19,7 +19,8 @@ class SummaryItem extends StatefulWidget {
 
 class _SummaryItemState extends State<SummaryItem> {
   bool isTapped = true;
-
+  double totalSumation = 0.00;
+  bool isNegative = false;
   bool isExpanded = false;
 
   @override
@@ -70,6 +71,17 @@ class _SummaryItemState extends State<SummaryItem> {
     for (int x = 0; x < monthIncomeSummary.length; x++) {
       sumIncome += double.parse(monthIncomeSummary[x]);
     }
+    double totalSummaryDetail(double sumIncome, double sumExpense) {
+      totalSumation = sumIncome - sumExpense;
+      if (totalSumation < 0) {
+        totalSumation = totalSumation * (-1);
+        isNegative = true;
+        return totalSumation;
+      } else {
+        isNegative = false;
+        return totalSumation;
+      }
+    }
 
     return InkWell(
       highlightColor: Colors.transparent,
@@ -110,11 +122,11 @@ class _SummaryItemState extends State<SummaryItem> {
               curve: Curves.fastLinearToSlowEaseIn,
               height: isTapped
                   ? isExpanded
-                      ? 90
-                      : 95
+                      ? 120
+                      : 125
                   : isExpanded
-                      ? 175
-                      : 180,
+                      ? 195
+                      : 200,
               width: isExpanded ? 345 : 350,
               child: isTapped
                   ? Row(
@@ -157,7 +169,7 @@ class _SummaryItemState extends State<SummaryItem> {
                                         style: kkSummaryIncome,
                                       ),
                                       Text(
-                                        sumIncome.toString(),
+                                        sumIncome.toStringAsFixed(2),
                                         style: kkSummaryIncome,
                                       ),
                                     ],
@@ -173,8 +185,42 @@ class _SummaryItemState extends State<SummaryItem> {
                                         'Expense',
                                         style: kkSummaryExpense,
                                       ),
-                                      Text(sumExpense.toString(),
+                                      Text(sumExpense.toStringAsFixed(2),
                                           style: kkSummaryExpense),
+                                    ],
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                  ),
+                                ),
+                                Container(
+                                  width: double.infinity,
+                                  height: 2,
+                                  color: Colors.white,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      const Text(
+                                        'Total',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      Text(
+                                        totalSummaryDetail(
+                                                sumIncome, sumExpense)
+                                            .toStringAsFixed(2),
+                                        style: TextStyle(
+                                          color: isNegative
+                                              ? Colors.red
+                                              : Colors.green,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 18,
+                                        ),
+                                      ),
                                     ],
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -236,7 +282,7 @@ class _SummaryItemState extends State<SummaryItem> {
                                             style: kkSummaryIncome,
                                           ),
                                           Text(
-                                            sumIncome.toString(),
+                                            sumIncome.toStringAsFixed(2),
                                             style: kkSummaryIncome,
                                           ),
                                         ],
@@ -252,8 +298,42 @@ class _SummaryItemState extends State<SummaryItem> {
                                             'Expense',
                                             style: kkSummaryExpense,
                                           ),
-                                          Text(sumExpense.toString(),
+                                          Text(sumExpense.toStringAsFixed(2),
                                               style: kkSummaryExpense),
+                                        ],
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                      ),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 2,
+                                      color: Colors.white,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            'Total',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          Text(
+                                            totalSummaryDetail(
+                                                    sumIncome, sumExpense)
+                                                .toStringAsFixed(2),
+                                            style: TextStyle(
+                                              color: isNegative
+                                                  ? Colors.red
+                                                  : Colors.green,
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 18,
+                                            ),
+                                          ),
                                         ],
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
