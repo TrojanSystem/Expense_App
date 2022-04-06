@@ -32,7 +32,7 @@ class DrawerItem extends StatelessWidget {
             flex: 3,
             child: Container(
               width: double.infinity,
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
                   const Color.fromRGBO(40, 53, 147, 1),
                   const Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9),
@@ -78,7 +78,7 @@ class DrawerItem extends StatelessWidget {
                     ),
                     TextButton(
                       child: const Text(
-                        'Monthly Percentage',
+                        'Monthly Expense',
                         style: kkExpense,
                       ),
                       onPressed: () {

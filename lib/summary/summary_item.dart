@@ -122,11 +122,11 @@ class _SummaryItemState extends State<SummaryItem> {
               curve: Curves.fastLinearToSlowEaseIn,
               height: isTapped
                   ? isExpanded
-                      ? 120
-                      : 125
+                      ? 125
+                      : 130
                   : isExpanded
-                      ? 195
-                      : 200,
+                      ? 200
+                      : 205,
               width: isExpanded ? 345 : 350,
               child: isTapped
                   ? Row(
