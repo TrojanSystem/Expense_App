@@ -1,4 +1,3 @@
-import 'package:example/model/monthly_budget_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:intl/intl.dart';
@@ -10,8 +9,9 @@ import '../model/transaction_data.dart';
 class SummaryExpenseList extends StatelessWidget {
   // final int index;
   final String month;
+  final int selectedCurrentYear;
 
-  SummaryExpenseList({this.month});
+  SummaryExpenseList({this.month, this.selectedCurrentYear});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class SummaryExpenseList extends StatelessWidget {
     final summaryDataList = Provider.of<TransactionData>(context).expenseList;
     final filtereByYear = summaryDataList
         .where((element) =>
-            DateTime.parse(element.date).year == DateTime.now().year)
+            DateTime.parse(element.date).year == selectedCurrentYear)
         .toList();
     var monthSummaryExpenseList =
         filtereByYear.where((element) => element.isIncome == false).toList();
@@ -48,7 +48,7 @@ class SummaryExpenseList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               Text('Expense Detail'),
-           //   x.isEmpty ? const Text('') : Text('Budget : ${x.last.budget.toString()}'),
+              //   x.isEmpty ? const Text('') : Text('Budget : ${x.last.budget.toString()}'),
             ],
           ),
           centerTitle: true,

@@ -9,8 +9,9 @@ import '../model/transaction_data.dart';
 class SummaryIncomeList extends StatelessWidget {
   // final int index;
   final String month;
+  final int selectedCurrentYear;
 
-  SummaryIncomeList({this.month});
+  SummaryIncomeList({this.month, this.selectedCurrentYear});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class SummaryIncomeList extends StatelessWidget {
     final summaryDataList = Provider.of<TransactionData>(context).expenseList;
     final filtereByYear = summaryDataList
         .where((element) =>
-            DateTime.parse(element.date).year == DateTime.now().year)
+            DateTime.parse(element.date).year == selectedCurrentYear)
         .toList();
     var monthSummaryExpenseList =
         filtereByYear.where((element) => element.isIncome == true).toList();
@@ -30,7 +31,8 @@ class SummaryIncomeList extends StatelessWidget {
         .toList();
     double _w = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(elevation: 0,
+      appBar: AppBar(
+          elevation: 0,
           backgroundColor:
               const Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9),
           title: const Text('Income Detail'),

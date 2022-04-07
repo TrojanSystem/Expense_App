@@ -1,14 +1,14 @@
+import 'package:example/input_form/monthly_form_item.dart';
 import 'package:example/item/account_item.dart';
 import 'package:example/item/drawer_item.dart';
-import 'package:example/input_form/monthly_form_item.dart';
 import 'package:example/item/transaction_tile_income.dart';
 import 'package:example/model/monthly_budget_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:provider/provider.dart';
+
 import '../constants.dart';
 import '../input_form/transaction_form_item.dart';
-import '../item/transaction_tile_expense.dart';
 import '../model/transaction_data.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -51,10 +51,11 @@ class _MyHomePageState extends State<MyHomePage> {
     final monthData =
         Provider.of<TransactionData>(context).monthTotalPrice = sum;
 
-    final monthBudgetInYear = Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
+    final monthBudgetInYear =
+        Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
     final budget = monthBudgetInYear
         .where((element) =>
-    DateTime.parse(element.date).year == DateTime.now().year)
+            DateTime.parse(element.date).year == DateTime.now().year)
         .toList();
     final dateFilter = budget.where((element) =>
         DateTime.parse(element.date).month == DateTime.now().month);

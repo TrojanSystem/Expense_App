@@ -10,18 +10,15 @@ const kkExpense = TextStyle(
   fontSize: 25,
   fontWeight: FontWeight.w900,
 );
-const kkSummaryIncome =TextStyle(
-color: Colors.green,
-fontWeight: FontWeight.w900,
-fontSize: 18,
-
+const kkSummaryIncome = TextStyle(
+  color: Colors.green,
+  fontWeight: FontWeight.w900,
+  fontSize: 18,
 );
-const kkSummaryExpense=
-   TextStyle(
-    color: Colors.red,
-    fontWeight: FontWeight.w900,
-    fontSize: 18,
-
+const kkSummaryExpense = TextStyle(
+  color: Colors.red,
+  fontWeight: FontWeight.w900,
+  fontSize: 18,
 );
 const kkDropDown = TextStyle(
   color: Colors.white,

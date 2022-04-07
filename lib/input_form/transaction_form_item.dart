@@ -158,7 +158,7 @@ class _TransactionFormState extends State<TransactionForm> {
                     _formKey.currentState.save();
                     double total =
                         Provider.of<TransactionData>(context, listen: false)
-                            .addTotalPrice(double.parse(price),checkIsIncome);
+                            .addTotalPrice(double.parse(price), checkIsIncome);
                     final newExpense = TransactionModel(
                       isIncome: checkIsIncome == 1 ? true : false,
                       name: name,

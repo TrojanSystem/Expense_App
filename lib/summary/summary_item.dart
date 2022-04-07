@@ -365,6 +365,8 @@ class _SummaryItemState extends State<SummaryItem> {
                                         MaterialPageRoute(
                                           builder: (_) => SummaryIncomeList(
                                             month: monthOfYear[widget.index],
+                                            selectedCurrentYear:
+                                                widget.currentYear,
                                           ),
                                         ),
                                       );
@@ -388,7 +390,10 @@ class _SummaryItemState extends State<SummaryItem> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (_) => SummaryExpenseList(
-                                              month: monthOfYear[widget.index]),
+                                            month: monthOfYear[widget.index],
+                                            selectedCurrentYear:
+                                                widget.currentYear,
+                                          ),
                                         ),
                                       );
                                     },
