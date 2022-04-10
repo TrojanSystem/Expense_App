@@ -79,6 +79,7 @@ class _MonthExpenseCategoriesState extends State<MonthExpenseCategories> {
               return MonthExpenseCategoriesItem(
                 todayFilteredList: todayFilteredList,
                 expense: file.expenseList[index],
+                selectedMonth: selectedMonth,
                 index: index,
               );
             },

@@ -9,30 +9,35 @@ import '../model/transaction_data.dart';
 class MonthExpenseCategoriesItem extends StatelessWidget {
   final List todayFilteredList;
   final TransactionModel expense;
-
+  final selectedMonth;
   final int index;
 
-  MonthExpenseCategoriesItem({
-    this.todayFilteredList,
-    this.index,
-    this.expense,
-  });
+  MonthExpenseCategoriesItem(
+      {this.todayFilteredList, this.index, this.expense, this.selectedMonth});
 
   @override
   Widget build(BuildContext context) {
-    final monthData = Provider.of<TransactionData>(context).monthlyBudget;
-    final budget = Provider.of<MonthlyBudgetData>(context, listen: false)
-        .monthlyBudgetList;
+    final monthBudgetInYear =
+        Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
+    final dateFilter = monthBudgetInYear
+        .where((element) =>
+            DateTime.parse(element.date).year == DateTime.now().year)
+        .toList();
+    final budget = dateFilter
+        .where((element) =>
+            DateTime.parse(element.date).month == DateTime.now().month)
+        .toList();
+
     budget.isEmpty
-        ? Provider.of<TransactionData>(context, listen: false).monthlyBudget = 0
-        : Provider.of<TransactionData>(context, listen: false).monthlyBudget =
+        ? Provider.of<TransactionData>(context).monthlyBudget = 0
+        : Provider.of<TransactionData>(context).monthlyBudget =
             double.parse(budget.first.budget);
+    final monthData = Provider.of<TransactionData>(context).monthlyBudget;
     var y = todayFilteredList.map((e) => e.name).toSet().toList();
     y.sort();
     var x =
         todayFilteredList.where((e) => e.name.toString() == y[index]).toList();
     var z = x.map((e) => e.name).toList();
-
     var zz = x.map((e) => e.price).toList();
     var sum = 0.0;
     for (int x = 0; x < z.length; x++) {
