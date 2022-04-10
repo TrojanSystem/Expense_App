@@ -1,9 +1,7 @@
-import 'package:example/item/expense_categories_item.dart';
 import 'package:example/model/transaction_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
 import 'expense_categories_item.dart';
 
 class ExpenseCategory extends StatefulWidget {
@@ -21,7 +19,7 @@ class _ExpenseCategoryState extends State<ExpenseCategory> {
     final yearFilter = Provider.of<TransactionData>(context).expenseList;
     final result = yearFilter
         .where((element) =>
-    DateTime.parse(element.date).year == DateTime.now().year)
+            DateTime.parse(element.date).year == DateTime.now().year)
         .toList();
     var totExpe = result.where((element) => element.isIncome == false).toList();
     var monthExpenseFilter = totExpe
@@ -50,6 +48,7 @@ class _ExpenseCategoryState extends State<ExpenseCategory> {
             itemCount: y.length,
             itemBuilder: (context, index) {
               return ExpenseCategoryItems(
+                monthExpenseList: monthExpenseFilter,
                 expense: result[index],
                 index: index,
               );

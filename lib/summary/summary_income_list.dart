@@ -45,6 +45,7 @@ class SummaryIncomeList extends StatelessWidget {
               parent: AlwaysScrollableScrollPhysics()),
           itemCount: monthExpense.length,
           itemBuilder: (BuildContext context, int index) {
+            monthExpense.sort((a, b) => b.date.compareTo(a.date));
             return AnimationConfiguration.staggeredList(
               position: index,
               delay: const Duration(milliseconds: 100),

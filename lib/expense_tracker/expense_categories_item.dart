@@ -4,14 +4,15 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../model/monthly_budget_data.dart';
 import '../model/transaction_data.dart';
 
 class ExpenseCategoryItems extends StatefulWidget {
   final int index;
+  final List monthExpenseList;
   final TransactionModel expense;
 
   ExpenseCategoryItems({
+    this.monthExpenseList,
     this.expense,
     this.index,
   });
@@ -28,24 +29,23 @@ class _ExpenseCategoryItemsState extends State<ExpenseCategoryItems> {
   @override
   Widget build(BuildContext context) {
     final yearFilter = Provider.of<TransactionData>(context).expenseList;
-    final result = yearFilter
+    final monthFilter = yearFilter
         .where((element) =>
-    DateTime.parse(element.date).year == DateTime.now().year)
+            DateTime.parse(element.date).year == DateTime.now().year)
         .toList();
-    var totExpe = result.where((element) => element.isIncome == false).toList();
-    var monthExpenseFilter = totExpe
+    final detailMonthFilter = monthFilter
         .where((element) =>
             DateTime.parse(element.date).month == DateTime.now().month)
         .toList();
-    var totalExpenses = monthExpenseFilter.map((e) => e.price).toList();
+    var totalExpenses = widget.monthExpenseList.map((e) => e.price).toList();
     var totSum = 0.0;
     for (int xx = 0; xx < totalExpenses.length; xx++) {
       totSum += double.parse(totalExpenses[xx]);
     }
 
-    var y = monthExpenseFilter.map((e) => e.name).toSet().toList();
-
-    var x = monthExpenseFilter
+    var y = widget.monthExpenseList.map((e) => e.name).toSet().toList();
+    y.sort();
+    var x = widget.monthExpenseList
         .where((e) => e.name.toString() == y[widget.index])
         .toList();
     var z = x.map((e) => e.name).toList();
@@ -55,10 +55,6 @@ class _ExpenseCategoryItemsState extends State<ExpenseCategoryItems> {
       sum += double.parse(zz[x]);
     }
 
-    var detailMonthFilter = result
-        .where((element) =>
-            DateTime.parse(element.date).month == DateTime.now().month)
-        .toList();
     final detail = detailMonthFilter
         .where((element) => element.name.toString() == y[widget.index])
         .toList();

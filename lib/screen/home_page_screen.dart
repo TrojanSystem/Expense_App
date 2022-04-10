@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
         .where(
             (element) => DateTime.parse(element.date).day == selectedDayOfMonth)
         .toList();
-
+    todayFilteredList.sort((a, b) => b.date.compareTo(a.date));
     var zExpense = todayMonthFilteredList
         .where((element) => element.isIncome == false)
         .toList();

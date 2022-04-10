@@ -1,4 +1,3 @@
-import 'package:example/item/expense_categories_item.dart';
 import 'package:example/model/transaction_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -78,10 +77,8 @@ class _MonthExpenseCategoriesState extends State<MonthExpenseCategories> {
             itemCount: y.length,
             itemBuilder: (context, index) {
               return MonthExpenseCategoriesItem(
-                selectedMonthOfYear: selectedMonth,
-                listOfExpense: file.expenseList,
+                todayFilteredList: todayFilteredList,
                 expense: file.expenseList[index],
-                totalPrice: totPrice,
                 index: index,
               );
             },

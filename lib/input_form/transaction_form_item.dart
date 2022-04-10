@@ -29,7 +29,11 @@ class _TransactionFormState extends State<TransactionForm> {
       lastDate: DateTime(DateTime.now().year + 1),
     ).then((val) {
       setState(() {
-        date = val;
+        if (val != null) {
+          date = val;
+        } else {
+          date = DateTime.now();
+        }
       });
     });
   }
@@ -58,10 +62,8 @@ class _TransactionFormState extends State<TransactionForm> {
                   onChanged: (bool state) {
                     if (state == false) {
                       checkIsIncome = 0;
-                      print(checkIsIncome);
                     } else {
                       checkIsIncome = 1;
-                      print(checkIsIncome);
                     }
                     // Provider.of<TransactionData>(context, listen: false)
                     //     .updaterChanger(state);

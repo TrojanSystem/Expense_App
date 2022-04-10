@@ -16,15 +16,6 @@ class SummaryExpenseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accessor = Provider.of<TransactionData>(context);
-    // final budget = Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
-    // final budgetYear = budget
-    //     .where((element) =>
-    //         DateTime.parse(element.date).year == DateTime.now().year)
-    //     .toList();
-    // final x = budgetYear
-    //     .where((element) =>
-    //         DateTime.parse(element.date).month == DateTime.now().month)
-    //     .toList();
     final summaryDataList = Provider.of<TransactionData>(context).expenseList;
     final filtereByYear = summaryDataList
         .where((element) =>
@@ -38,6 +29,7 @@ class SummaryExpenseList extends StatelessWidget {
             DateFormat.MMM().format(DateTime.parse(element.date)).toString() ==
             month.toString())
         .toList();
+
     double _w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
@@ -60,6 +52,7 @@ class SummaryExpenseList extends StatelessWidget {
               parent: AlwaysScrollableScrollPhysics()),
           itemCount: monthExpense.length,
           itemBuilder: (BuildContext context, int index) {
+            monthExpense.sort((a, b) => b.date.compareTo(a.date));
             return AnimationConfiguration.staggeredList(
               position: index,
               delay: const Duration(milliseconds: 100),

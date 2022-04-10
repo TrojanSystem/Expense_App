@@ -11,9 +11,13 @@ class ExpenseCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final yearFilter = Provider.of<TransactionData>(context).expenseList;
-    final result = yearFilter
+    final monthFilter = yearFilter
         .where((element) =>
-    DateTime.parse(element.date).year == DateTime.now().year)
+            DateTime.parse(element.date).year == DateTime.now().year)
+        .toList();
+    final result = monthFilter
+        .where((element) =>
+            DateTime.parse(element.date).month == DateTime.now().month)
         .toList();
     var newDateExpenseList = result
         .where(
@@ -29,8 +33,8 @@ class ExpenseCategories extends StatelessWidget {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
-              Color.fromRGBO(40, 53, 147, 1),
-              Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9),
+              const Color.fromRGBO(40, 53, 147, 1),
+              const Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9),
             ], begin: Alignment.bottomRight, end: Alignment.topLeft),
           ),
         ),
@@ -38,16 +42,12 @@ class ExpenseCategories extends StatelessWidget {
       ),
       body: Consumer<TransactionData>(
         builder: (context, file, child) {
-          final totPrice = Provider.of<TransactionData>(context).totalPrice;
-
           return ListView.builder(
             itemCount: y.length,
             itemBuilder: (context, indexs) {
               return ExpenseCategoriesItem(
-                recievedIntExpenses: passedIntExpense,
-                listOfExpense: file.expenseList,
+                newDateList: newDateList,
                 expense: file.expenseList[indexs],
-                totalPrice: totPrice,
                 index: indexs,
               );
             },

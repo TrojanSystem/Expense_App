@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:provider/provider.dart';
+
 import '../model/transaction_data.dart';
 
 class TransactionUpdateForm extends StatefulWidget {
@@ -19,7 +20,8 @@ class TransactionUpdateForm extends StatefulWidget {
       this.existedPrice,
       this.existedDate,
       this.index,
-      this.existedDescription,this.existedIsIncome});
+      this.existedDescription,
+      this.existedIsIncome});
 
   @override
   State<TransactionUpdateForm> createState() => _TransactionUpdateFormState();
@@ -40,7 +42,11 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
       lastDate: DateTime(DateTime.now().year + 1),
     ).then((val) {
       setState(() {
-        updatedDate = val;
+        if (val != null) {
+          updatedDate = val;
+        } else {
+          updatedDate = DateTime.now();
+        }
       });
     });
   }
@@ -173,9 +179,9 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                     double total =
                         Provider.of<TransactionData>(context, listen: false)
                             .updateTotalPrice(
-                      double.parse(widget.existedPrice),
-                      double.parse(updatedPrice),widget.existedIsIncome
-                    );
+                                double.parse(widget.existedPrice),
+                                double.parse(updatedPrice),
+                                widget.existedIsIncome);
 
                     final updateExpense = TransactionModel(
                       isIncome: checkIsIncome == 1 ? true : false,

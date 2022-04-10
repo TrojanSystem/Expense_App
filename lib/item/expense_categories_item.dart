@@ -6,34 +6,19 @@ import 'package:provider/provider.dart';
 import '../model/transaction_data.dart';
 
 class ExpenseCategoriesItem extends StatelessWidget {
-  final int recievedIntExpenses;
-  final List listOfExpense;
+  final List newDateList;
   final TransactionModel expense;
-  double totalPrice;
+
   final int index;
 
-  ExpenseCategoriesItem(
-      {this.listOfExpense,
-      this.index,
-      this.expense,
-      this.totalPrice,
-      this.recievedIntExpenses});
+  ExpenseCategoriesItem({
+    this.newDateList,
+    this.index,
+    this.expense,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final yearFilter = Provider.of<TransactionData>(context).expenseList;
-    final result = yearFilter
-        .where((element) =>
-    DateTime.parse(element.date).year == DateTime.now().year)
-        .toList();
-    var newDateExpenseList = result
-        .where((element) =>
-            DateTime.parse(element.date).day == recievedIntExpenses)
-        .toList();
-    var newDateList = newDateExpenseList
-        .where((element) => element.isIncome == false)
-        .toList();
-
     var zzzz = newDateList.map((e) => e.price).toList();
     var sumTotalprice = 0.0;
     for (int x = 0; x < zzzz.length; x++) {
@@ -41,7 +26,7 @@ class ExpenseCategoriesItem extends StatelessWidget {
     }
 
     var y = newDateList.map((e) => e.name).toSet().toList();
-
+    y.sort();
     var x = newDateList.where((e) => e.name.toString() == y[index]).toList();
     var z = x.map((e) => e.name).toList();
     var zz = x.map((e) => e.price).toList();
@@ -56,7 +41,7 @@ class ExpenseCategoriesItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 18.0,bottom: 10),
+            margin: const EdgeInsets.only(left: 18.0, bottom: 10),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
