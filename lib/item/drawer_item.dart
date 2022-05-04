@@ -1,10 +1,13 @@
+import 'package:example/budget_and_income/income_detail.dart';
 import 'package:example/screen/expense_categories.dart';
 import 'package:example/summary/summry_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../budget_and_income/budget_detail.dart';
 import '../constants.dart';
 import '../expense_tracker/expense_categories.dart';
 import '../month_expense/month_expense_categories.dart';
+import 'drawer_drop_down_list.dart';
 
 class DrawerItem extends StatelessWidget {
   final int selectedDayExpenses;
@@ -62,13 +65,13 @@ class DrawerItem extends StatelessWidget {
                     ),
                     TextButton(
                       child: const Text(
-                        'Expense Tracker',
+                        'Income',
                         style: kkExpense,
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (ctx) => const ExpenseCategory(),
+                            builder: (ctx) => IncomeDetail(),
                           ),
                         );
                       },
@@ -76,15 +79,34 @@ class DrawerItem extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
+                    DrawerDropDownListItems(
+                      title: 'Expense',
+                      listItem1: 'Usage Data',
+                      listItem2: 'Month Expense',
+                      buttonPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => const ExpenseCategory(),
+                          ),
+                        );
+                      },
+                      buttonPressedDetail: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => const MonthExpenseCategories(),
+                          ),
+                        );
+                      },
+                    ),
                     TextButton(
                       child: const Text(
-                        'Monthly Expense',
+                        'Budget',
                         style: kkExpense,
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (ctx) => const MonthExpenseCategories(),
+                            builder: (ctx) => BudgetDetail(),
                           ),
                         );
                       },

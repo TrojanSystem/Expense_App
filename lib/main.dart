@@ -1,6 +1,7 @@
-import 'package:example/screen/home_page_screen.dart';
+import 'package:example/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'model/monthly_budget_data.dart';
 import 'model/transaction_data.dart';
 
@@ -11,7 +12,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MyHomePage(),
+        home: MyCustomSplashScreen(),
       ),
     );
   }

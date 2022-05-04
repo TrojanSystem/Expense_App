@@ -38,8 +38,8 @@ class _MonthExpenseCategoriesState extends State<MonthExpenseCategories> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
-              Color.fromRGBO(40, 53, 147, 1),
-              Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9)
+              const Color.fromRGBO(40, 53, 147, 1),
+              const Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9)
             ], begin: Alignment.bottomRight, end: Alignment.topLeft),
           ),
         ),

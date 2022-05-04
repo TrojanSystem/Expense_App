@@ -28,6 +28,7 @@ class ExpenseCategoriesItem extends StatelessWidget {
     var y = newDateList.map((e) => e.name).toSet().toList();
     y.sort();
     var x = newDateList.where((e) => e.name.toString() == y[index]).toList();
+
     var z = x.map((e) => e.name).toList();
     var zz = x.map((e) => e.price).toList();
     var sum = 0.0;

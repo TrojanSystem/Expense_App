@@ -48,8 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(z[x]);
     }
-    final monthData =
-        Provider.of<TransactionData>(context).monthTotalPrice = sum;
 
     final monthBudgetInYear =
         Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
@@ -57,13 +55,18 @@ class _MyHomePageState extends State<MyHomePage> {
         .where((element) =>
             DateTime.parse(element.date).year == DateTime.now().year)
         .toList();
-    final dateFilter = budget.where((element) =>
-        DateTime.parse(element.date).month == DateTime.now().month);
-
+    final dateFilter = budget
+        .where((element) =>
+            DateTime.parse(element.date).month == DateTime.now().month)
+        .toList();
+    dateFilter.sort((a, b) {
+      return a.date.compareTo(b.date);
+    });
     dateFilter.isEmpty
         ? Provider.of<TransactionData>(context).monthlyBudget = 0
         : Provider.of<TransactionData>(context).monthlyBudget =
             double.parse(dateFilter.last.budget);
+
     final percentage = Provider.of<TransactionData>(context).percent();
 
     return Scaffold(

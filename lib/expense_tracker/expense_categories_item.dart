@@ -10,8 +10,10 @@ class ExpenseCategoryItems extends StatefulWidget {
   final int index;
   final List monthExpenseList;
   final TransactionModel expense;
+  final int selectedMonth;
 
   ExpenseCategoryItems({
+    this.selectedMonth,
     this.monthExpenseList,
     this.expense,
     this.index,
@@ -35,7 +37,7 @@ class _ExpenseCategoryItemsState extends State<ExpenseCategoryItems> {
         .toList();
     final detailMonthFilter = monthFilter
         .where((element) =>
-            DateTime.parse(element.date).month == DateTime.now().month)
+            DateTime.parse(element.date).month == widget.selectedMonth)
         .toList();
     var totalExpenses = widget.monthExpenseList.map((e) => e.price).toList();
     var totSum = 0.0;

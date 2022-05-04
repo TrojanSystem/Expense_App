@@ -5,14 +5,16 @@ import 'package:provider/provider.dart';
 
 import '../model/monthly_budget_data.dart';
 
-class MonthlyForm extends StatefulWidget {
-  const MonthlyForm({Key key}) : super(key: key);
-
+class MonthlyUpdateForm extends StatefulWidget {
+  const MonthlyUpdateForm({this.existedBudget, this.existedDate, this.index});
+  final String existedBudget;
+  final String existedDate;
+  final int index;
   @override
-  State<MonthlyForm> createState() => _MonthlyFormState();
+  State<MonthlyUpdateForm> createState() => _MonthlyUpdateFormState();
 }
 
-class _MonthlyFormState extends State<MonthlyForm> {
+class _MonthlyUpdateFormState extends State<MonthlyUpdateForm> {
   final _formKey = GlobalKey<FormState>();
   bool isTapped = false;
   String budget = '';
@@ -46,6 +48,7 @@ class _MonthlyFormState extends State<MonthlyForm> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                initialValue: widget.existedBudget,
                 validator: (value) {
                   final pattern = RegExp("^[0-9]{1,10}");
                   if (value.isEmpty) {
@@ -96,11 +99,12 @@ class _MonthlyFormState extends State<MonthlyForm> {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
                     final newMonthlyBudget = MonthlyBudget(
+                      id: widget.index,
                       budget: budget,
                       date: date,
                     );
                     Provider.of<MonthlyBudgetData>(context, listen: false)
-                        .addMonthlyBudgetList(newMonthlyBudget);
+                        .updateMonthlyBudgetList(newMonthlyBudget);
                     Navigator.of(context).pop();
                   }
                 },

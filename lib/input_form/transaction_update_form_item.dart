@@ -29,6 +29,7 @@ class TransactionUpdateForm extends StatefulWidget {
 
 class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
   final _formKey = GlobalKey<FormState>();
+  bool isTapped = false;
   String updatedName = '';
   String updatedDescription = '';
   String updatedPrice = '';
@@ -171,9 +172,16 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RaisedButton(
-                onPressed: () async {
+              padding: const EdgeInsets.only(left: 40.0, right: 40, top: 10),
+              child: InkWell(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onHighlightChanged: (value) {
+                  setState(() {
+                    isTapped = value;
+                  });
+                },
+                onTap: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
                     double total =
@@ -197,7 +205,35 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                   }
                   Navigator.of(context).pop();
                 },
-                child: const Text('Save Updated Input'),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.fastLinearToSlowEaseIn,
+                  height: isTapped ? 45 : 50,
+                  width: isTapped ? 150 : 160,
+                  decoration: BoxDecoration(
+                    color: Colors.blue[800],
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 30,
+                        offset: Offset(3, 7),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Update Expense',
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.7),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],

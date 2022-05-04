@@ -9,7 +9,7 @@ import '../model/transaction_data.dart';
 class MonthExpenseCategoriesItem extends StatelessWidget {
   final List todayFilteredList;
   final TransactionModel expense;
-  final selectedMonth;
+  final int selectedMonth;
   final int index;
 
   MonthExpenseCategoriesItem(
@@ -24,14 +24,16 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
             DateTime.parse(element.date).year == DateTime.now().year)
         .toList();
     final budget = dateFilter
-        .where((element) =>
-            DateTime.parse(element.date).month == DateTime.now().month)
+        .where(
+            (element) => (DateTime.parse(element.date)).month == selectedMonth)
         .toList();
-
+    budget.sort((a, b) {
+      return a.date.compareTo(b.date);
+    });
     budget.isEmpty
         ? Provider.of<TransactionData>(context).monthlyBudget = 0
         : Provider.of<TransactionData>(context).monthlyBudget =
-            double.parse(budget.first.budget);
+            double.parse(budget.last.budget);
     final monthData = Provider.of<TransactionData>(context).monthlyBudget;
     var y = todayFilteredList.map((e) => e.name).toSet().toList();
     y.sort();

@@ -1,6 +1,7 @@
 import 'package:example/model/transaction_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'expense.dart';
 import 'income.dart';
 
@@ -19,7 +20,7 @@ class _AccountState extends State<Account> {
     final yearFilter = Provider.of<TransactionData>(context).expenseList;
     final result = yearFilter
         .where((element) =>
-    DateTime.parse(element.date).year == DateTime.now().year)
+            DateTime.parse(element.date).year == DateTime.now().year)
         .toList();
 
     var todayMonthFilteredList = result
@@ -58,7 +59,7 @@ class _AccountState extends State<Account> {
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(z[x]);
     }
-
+    Provider.of<TransactionData>(context).monthTotalPrice = totSum;
     return Consumer<TransactionData>(
       builder: (context, data, child) => Column(
         children: [
