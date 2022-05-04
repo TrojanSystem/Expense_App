@@ -14,6 +14,7 @@ class TransactionForm extends StatefulWidget {
 }
 
 class _TransactionFormState extends State<TransactionForm> {
+  bool isTapped = false;
   final _formKey = GlobalKey<FormState>();
   String description = '';
   String name = '';
@@ -153,11 +154,19 @@ class _TransactionFormState extends State<TransactionForm> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RaisedButton(
-                onPressed: () async {
+              padding: const EdgeInsets.only(left: 40.0, right: 40, top: 10),
+              child: InkWell(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onHighlightChanged: (value) {
+                  setState(() {
+                    isTapped = value;
+                  });
+                },
+                onTap: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
+
                     double total =
                         Provider.of<TransactionData>(context, listen: false)
                             .addTotalPrice(double.parse(price), checkIsIncome);
@@ -174,7 +183,35 @@ class _TransactionFormState extends State<TransactionForm> {
                     Navigator.of(context).pop();
                   }
                 },
-                child: const Text('Save Expense'),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.fastLinearToSlowEaseIn,
+                  height: isTapped ? 45 : 50,
+                  width: isTapped ? 150 : 160,
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 30,
+                        offset: const Offset(3, 7),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Save Expense',
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.7),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
