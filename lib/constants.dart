@@ -59,6 +59,7 @@ const storageTitle = TextStyle(
   fontWeight: FontWeight.w900,
 );
 const storageItemName = TextStyle(
+  color: Colors.black,
   fontSize: 20,
   fontWeight: FontWeight.w900,
 );

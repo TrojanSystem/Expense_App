@@ -1,6 +1,5 @@
 import 'package:example/input_form/transaction_update_form_item.dart';
 import 'package:example/model/transaction_data.dart';
-import 'package:example/model/transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -106,33 +105,13 @@ class _IncomeDetailState extends State<IncomeDetail> {
                                               listen: false)
                                           .deleteExpenseList(
                                               incomeDetail[index].id);
-                                      double totalMinus = Provider.of<
-                                                  TransactionData>(context,
-                                              listen: false)
-                                          .minusTotalPrice(
-                                              double.parse(
-                                                  incomeDetail[index].price),
-                                              incomeDetail[index].isIncome);
-                                      final updateExpense = TransactionModel(
-                                        isIncome: incomeDetail[index].isIncome,
-                                        id: incomeDetail[index].id,
-                                        name: incomeDetail[index].name,
-                                        description:
-                                            incomeDetail[index].description,
-                                        price: incomeDetail[index].price,
-                                        date:
-                                            incomeDetail[index].date.toString(),
-                                        total: totalMinus.toString(),
-                                      );
-                                      Provider.of<TransactionData>(context,
-                                              listen: false)
-                                          .updateExpenseList(updateExpense);
+                                      Navigator.of(ctx).pop(true);
                                     },
                                     child: const Text('Yes'),
                                   ),
                                 ],
                                 content: const Text(
-                                    'Do you want to remove this item from the cart?'),
+                                    'Do you want to remove this income?'),
                               ),
                             );
                           },
@@ -234,7 +213,8 @@ class _IncomeDetailState extends State<IncomeDetail> {
                                         ),
                                         Text(
                                           DateFormat.yMMMEd().format(
-                                            DateTime.now(),
+                                            DateTime.parse(
+                                                incomeDetail[index].date),
                                           ),
                                           style: storageItemDate,
                                         ),

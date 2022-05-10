@@ -59,7 +59,7 @@ class _AccountState extends State<Account> {
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(z[x]);
     }
-    Provider.of<TransactionData>(context).monthTotalPrice = totSum;
+
     return Consumer<TransactionData>(
       builder: (context, data, child) => Column(
         children: [

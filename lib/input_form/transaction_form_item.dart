@@ -66,8 +66,6 @@ class _TransactionFormState extends State<TransactionForm> {
                     } else {
                       checkIsIncome = 1;
                     }
-                    // Provider.of<TransactionData>(context, listen: false)
-                    //     .updaterChanger(state);
                   },
                 ),
               ],

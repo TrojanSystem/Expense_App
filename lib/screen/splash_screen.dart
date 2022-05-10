@@ -137,7 +137,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
                   const Padding(
                     padding: EdgeInsets.only(left: 8.0),
                     child: Text(
-                      'version: 1.0.0+1',
+                      'version: 1.0.0+28',
                       style: sloganStyle,
                     ),
                   ),

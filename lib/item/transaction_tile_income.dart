@@ -1,6 +1,5 @@
 import 'package:example/input_form/transaction_update_form_item.dart';
 import 'package:example/model/transaction_model.dart';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +20,8 @@ class TransactionTileIncome extends StatefulWidget {
 class _TransactionTileIncomeState extends State<TransactionTileIncome> {
   @override
   Widget build(BuildContext context) {
-       return Padding(
-      padding: const EdgeInsets.fromLTRB(8,8.0,8,0),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 8.0, 8, 0),
       child: Stack(
         children: [
           Container(
@@ -52,7 +51,10 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const Icon(Icons.access_time_filled_rounded,size: 20,),
+                        const Icon(
+                          Icons.access_time_filled_rounded,
+                          size: 20,
+                        ),
                         const SizedBox(
                           width: 10,
                         ),
@@ -72,7 +74,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                   Container(
                     margin: const EdgeInsets.only(left: 15, top: 5),
                     child: Text(
-                      widget.expense.name,
+                      widget.expense.description,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 15,
@@ -88,12 +90,14 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                           showModalBottomSheet(
                             context: context,
                             builder: (ctx) => TransactionUpdateForm(
-                                index: widget.expense.id,
-                                existedIsIncome: widget.expense.isIncome,
-                                existedDescription: widget.expense.description,
-                                existedName: widget.expense.name,
-                                existedPrice: widget.expense.price,
-                                existedDate: widget.expense.date),
+                              index: widget.expense.id,
+                              isExpense: widget.expense.isIncome,
+                              existedIsIncome: widget.expense.isIncome,
+                              existedDescription: widget.expense.description,
+                              existedName: widget.expense.name,
+                              existedPrice: widget.expense.price,
+                              existedDate: widget.expense.date,
+                            ),
                           );
                         },
                         icon: const Icon(
@@ -112,7 +116,7 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                               .minusTotalPrice(
                                   double.parse(widget.expense.price),
                                   widget.expense.isIncome);
-                                                   final updateExpense = TransactionModel(
+                          final updateExpense = TransactionModel(
                             isIncome: widget.expense.isIncome,
                             id: widget.expense.id,
                             name: widget.expense.name,
@@ -123,8 +127,6 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                           );
                           Provider.of<TransactionData>(context, listen: false)
                               .updateExpenseList(updateExpense);
-
-
                         },
                         icon: const Icon(
                           Icons.delete_forever,
@@ -151,8 +153,10 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                   Icon(
-                    widget.expense.isIncome ?  Icons.arrow_downward_rounded:Icons.arrow_upward_rounded,
+                  Icon(
+                    widget.expense.isIncome
+                        ? Icons.arrow_downward_rounded
+                        : Icons.arrow_upward_rounded,
                     size: 20,
                     color: Colors.white,
                   ),

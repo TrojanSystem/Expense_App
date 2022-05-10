@@ -11,17 +11,21 @@ class TransactionUpdateForm extends StatefulWidget {
   int index;
   String existedDescription;
   String existedName;
+  bool isExpense;
   String existedPrice;
   String existedDate;
   bool existedIsIncome;
 
   TransactionUpdateForm(
-      {this.existedName,
+      {Key key,
+      this.isExpense,
+      this.existedName,
       this.existedPrice,
       this.existedDate,
       this.index,
       this.existedDescription,
-      this.existedIsIncome});
+      this.existedIsIncome})
+      : super(key: key);
 
   @override
   State<TransactionUpdateForm> createState() => _TransactionUpdateFormState();
@@ -65,7 +69,7 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
               children: [
                 LiteRollingSwitch(
                   //initial value
-                  value: false,
+                  value: widget.isExpense,
                   textOn: 'Income',
                   textOff: 'Expense',
                   colorOn: Colors.green[800],
@@ -76,13 +80,9 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                   onChanged: (bool state) {
                     if (state == false) {
                       checkIsIncome = 0;
-                      print(checkIsIncome);
                     } else {
                       checkIsIncome = 1;
-                      print(checkIsIncome);
                     }
-                    // Provider.of<TransactionData>(context, listen: false)
-                    //     .updaterChanger(state);
                   },
                 ),
               ],
@@ -219,13 +219,13 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                       BoxShadow(
                         color: Colors.black.withOpacity(0.3),
                         blurRadius: 30,
-                        offset: Offset(3, 7),
+                        offset: const Offset(3, 7),
                       ),
                     ],
                   ),
                   child: Center(
                     child: Text(
-                      'Update Expense',
+                      widget.isExpense ? 'Update Income' : 'Update Expense',
                       style: TextStyle(
                         color: Colors.black.withOpacity(0.7),
                         fontWeight: FontWeight.w500,

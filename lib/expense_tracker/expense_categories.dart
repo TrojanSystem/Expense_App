@@ -36,7 +36,7 @@ class _ExpenseCategoryState extends State<ExpenseCategory> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
-              Color.fromRGBO(40, 53, 147, 1),
+              const Color.fromRGBO(40, 53, 147, 1),
               Color.fromRGBO(40, 53, 147, 1).withOpacity(0.9),
             ], begin: Alignment.bottomRight, end: Alignment.topLeft),
           ),
@@ -69,17 +69,28 @@ class _ExpenseCategoryState extends State<ExpenseCategory> {
       ),
       body: Consumer<TransactionData>(
         builder: (context, file, child) {
-          return ListView.builder(
-            itemCount: y.length,
-            itemBuilder: (context, index) {
-              return ExpenseCategoryItems(
-                monthExpenseList: monthExpenseFilter,
-                expense: result[index],
-                index: index,
-                selectedMonth: selectedMonth,
-              );
-            },
-          );
+          return monthExpenseFilter.isNotEmpty
+              ? ListView.builder(
+                  itemCount: y.length,
+                  itemBuilder: (context, index) {
+                    return ExpenseCategoryItems(
+                      monthExpenseList: monthExpenseFilter,
+                      expense: result[index],
+                      index: index,
+                      selectedMonth: selectedMonth,
+                    );
+                  },
+                )
+              : const Center(
+                  child: Text(
+                    'Not Yet!',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                );
         },
       ),
     );

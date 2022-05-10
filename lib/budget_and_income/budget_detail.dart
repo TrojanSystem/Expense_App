@@ -3,6 +3,7 @@ import 'package:example/model/transaction_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -20,6 +21,9 @@ class BudgetDetail extends StatefulWidget {
 class _BudgetDetailState extends State<BudgetDetail> {
   int selectedMonth = DateTime.now().month;
   var monthPlan;
+  double totalSumation = 0.00;
+  bool isNegative = false;
+  int currentYear = DateTime.now().year;
   Color colorIndicator = Colors.blue[800];
   @override
   Widget build(BuildContext context) {
@@ -28,45 +32,22 @@ class _BudgetDetailState extends State<BudgetDetail> {
     final daysFilterListInYear =
         Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
     final daysFilterList = daysFilterListInYear
-        .where((element) =>
-            DateTime.parse(element.date).year == DateTime.now().year)
+        .where((element) => DateTime.parse(element.date).year == currentYear)
+        .toList();
+    daysFilterList.sort((a, b) => a.date.compareTo(b.date));
+    final x = daysFilterList
+        .map((e) => DateFormat.MMM().format(DateTime.parse(e.date)))
+        .toSet()
         .toList();
 
-    var budgetDetail = daysFilterList
-        .where((element) => DateTime.parse(element.date).month == selectedMonth)
+    final yearFilter = Provider.of<TransactionData>(context).expenseList;
+    final result = yearFilter
+        .where((element) => DateTime.parse(element.date).year == currentYear)
         .toList();
-    budgetDetail.sort((a, b) => a.date.compareTo(b.date));
 
     //////////
 
     //////
-    final yearFilter = Provider.of<TransactionData>(context).expenseList;
-    final result = yearFilter
-        .where((element) =>
-            DateTime.parse(element.date).year == DateTime.now().year)
-        .toList();
-
-    var isIncome = result.where((element) => element.isIncome == true).toList();
-    var totInc = isIncome
-        .where((element) => DateTime.parse(element.date).month == selectedMonth)
-        .toList();
-    var totalIncome = totInc.map((e) => e.price).toList();
-    var totIncomeSum = 0.0;
-    for (int xx = 0; xx < totalIncome.length; xx++) {
-      totIncomeSum += double.parse(totalIncome[xx]);
-    }
-    var monthExpenseFilter =
-        result.where((element) => element.isIncome == false).toList();
-    var totExpe = monthExpenseFilter
-        .where((element) => DateTime.parse(element.date).month == selectedMonth)
-        .toList();
-
-    var totalExpenses = totExpe.map((e) => e.price).toList();
-    var totExpenseSum = 0.0;
-    for (int xx = 0; xx < totalExpenses.length; xx++) {
-      totExpenseSum += double.parse(totalExpenses[xx]);
-    }
-    final double total = totIncomeSum - totExpenseSum;
 
     return Scaffold(
       appBar: AppBar(
@@ -77,43 +58,118 @@ class _BudgetDetailState extends State<BudgetDetail> {
           'Budget Detail',
         ),
         actions: [
-          DropdownButton(
-            dropdownColor: Colors.grey[850],
-            iconEnabledColor: Colors.white,
-            menuMaxHeight: 300,
-            value: selectedMonth,
-            items: monthSelected
-                .map(
-                  (e) => DropdownMenuItem(
-                    child: Text(
-                      e['mon'],
-                      style: kkDropDown,
-                    ),
-                    value: e['day'],
-                  ),
-                )
-                .toList(),
-            onChanged: (value) {
-              setState(() {
-                selectedMonth = value;
-              });
-            },
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    currentYear -= 1;
+                  });
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: Text(
+                  currentYear.toString(),
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white),
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    currentYear = currentYear + 1;
+                  });
+                },
+                icon: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ),
+            ],
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
           ),
         ],
       ),
-      body: budgetDetail.isNotEmpty
+      body: x.isNotEmpty
           ? AnimationLimiter(
               child: ListView.builder(
                 padding: EdgeInsets.all(_w / 30),
                 physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics(),
                 ),
-                itemCount: 1,
+                itemCount: x.length,
                 itemBuilder: (BuildContext context, int index) {
-                  if (double.parse(budgetDetail.last.budget) > total) {
+                  var budgetDetail = daysFilterList
+                      .where((element) =>
+                          DateFormat.MMM()
+                              .format(DateTime.parse(element.date))
+                              .toString() ==
+                          x[index])
+                      .toList();
+
+                  budgetDetail.sort((a, b) => a.date.compareTo(b.date));
+                  var isIncome = result
+                      .where((element) => element.isIncome == true)
+                      .toList();
+                  var totInc = isIncome
+                      .where((element) =>
+                          DateFormat.MMM()
+                              .format(DateTime.parse(element.date))
+                              .toString() ==
+                          x[index])
+                      .toList();
+                  var totalIncome = totInc.map((e) => e.price).toList();
+                  var totIncomeSum = 0.0;
+                  for (int xx = 0; xx < totalIncome.length; xx++) {
+                    totIncomeSum += double.parse(totalIncome[xx]);
+                  }
+                  var monthExpenseFilter = result
+                      .where((element) => element.isIncome == false)
+                      .toList();
+                  var totExpe = monthExpenseFilter
+                      .where((element) =>
+                          DateFormat.MMM()
+                              .format(DateTime.parse(element.date))
+                              .toString() ==
+                          x[index])
+                      .toList();
+
+                  var totalExpenses = totExpe.map((e) => e.price).toList();
+                  var totExpenseSum = 0.0;
+                  for (int xx = 0; xx < totalExpenses.length; xx++) {
+                    totExpenseSum += double.parse(totalExpenses[xx]);
+                  }
+                  final double total = totIncomeSum - totExpenseSum;
+                  double totalSummaryDetail(
+                      double totIncomeSum, double totExpenseSum) {
+                    totalSumation = totIncomeSum - totExpenseSum;
+                    if (totalSumation < 0) {
+                      totalSumation = totalSumation * (-1);
+                      isNegative = true;
+                      return totalSumation;
+                    } else {
+                      isNegative = false;
+                      return totalSumation;
+                    }
+                  }
+
+                  if (double.parse(budgetDetail.last.budget) >
+                      totalSummaryDetail(totIncomeSum, totExpenseSum)) {
                     monthPlan = 'Under-Budget';
                     colorIndicator = Colors.green[800];
-                  } else if (double.parse(budgetDetail.last.budget) < total) {
+                  } else if (double.parse(budgetDetail.last.budget) <
+                      totalSummaryDetail(totIncomeSum, totExpenseSum)) {
                     monthPlan = 'Over-Budget';
                     colorIndicator = Colors.red[800];
                   } else {
@@ -143,16 +199,17 @@ class _BudgetDetailState extends State<BudgetDetail> {
                                   ),
                                   FlatButton(
                                     onPressed: () {
-                                      Provider.of<TransactionData>(context,
+                                      Provider.of<MonthlyBudgetData>(context,
                                               listen: false)
-                                          .deleteExpenseList(
+                                          .deleteMonthlyBudgetList(
                                               budgetDetail.last.id);
+                                      Navigator.of(ctx).pop(true);
                                     },
                                     child: const Text('Yes'),
                                   ),
                                 ],
                                 content: const Text(
-                                    'Do you want to remove this item from the cart?'),
+                                    'Do you want to remove this budget?'),
                               ),
                             );
                           },
@@ -195,128 +252,184 @@ class _BudgetDetailState extends State<BudgetDetail> {
                         horizontalOffset: -300,
                         verticalOffset: -850,
                         child: Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          child: Column(
                             children: [
                               Expanded(
                                 child: Container(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        budgetDetail.last.budget.toString(),
-                                        style: storageItemMoney,
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      const Text(
-                                        'ETB',
-                                        style: storageItemCurrency,
-                                      ),
-                                    ],
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                  child: Text(
+                                    x[index],
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 20),
                                   ),
-                                  margin: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border(
+                                      bottom: BorderSide(
+                                          color: Colors.blue[800], width: 3),
+                                    ),
                                   ),
                                 ),
                               ),
                               Expanded(
-                                flex: 3,
-                                child: Container(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text(
-                                              'Income',
-                                              style: storageItemName,
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 0, right: 18.0),
-                                              child: Text(
-                                                totIncomeSum.toStringAsFixed(2),
-                                                style: storageItemName,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Padding(
-                                              padding: EdgeInsets.only(
-                                                  bottom: 8.0, top: 0),
-                                              child: Text(
-                                                'Expense',
-                                                style: storageItemName,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 8.0,
-                                                  right: 18,
-                                                  top: 0),
-                                              child: Text(
-                                                totExpenseSum
-                                                    .toStringAsFixed(2),
-                                                style: storageItemName,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                flex: 4,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        child: Column(
                                           children: [
                                             Text(
-                                              '${String.fromCharCode(0x03A3)} =$total',
-                                              style: storageItemName,
+                                              budgetDetail.last.budget
+                                                  .toString(),
+                                              style: storageItemMoney,
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 18.0),
-                                              child: Text(
-                                                monthPlan.toString(),
-                                                style: TextStyle(
-                                                    color: colorIndicator,
-                                                    fontWeight:
-                                                        FontWeight.w900),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            const Text(
+                                              'ETB',
+                                              style: storageItemCurrency,
+                                            ),
+                                          ],
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                        ),
+                                        margin: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Container(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              flex: 2,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  const Text(
+                                                    'Income',
+                                                    style: storageItemName,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 0,
+                                                            right: 18.0),
+                                                    child: Text(
+                                                      totIncomeSum
+                                                          .toStringAsFixed(2),
+                                                      style: storageItemName,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        bottom: 8.0, top: 0),
+                                                    child: Text(
+                                                      'Expense',
+                                                      style: storageItemName,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 8.0,
+                                                            right: 18,
+                                                            top: 0),
+                                                    child: Text(
+                                                      totExpenseSum
+                                                          .toStringAsFixed(2),
+                                                      style: storageItemName,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  RichText(
+                                                    text: TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                            text:
+                                                                '${String.fromCharCode(0x03A3)} = ',
+                                                            style:
+                                                                storageItemName),
+                                                        TextSpan(
+                                                          text:
+                                                              '${totalSummaryDetail(totIncomeSum, totExpenseSum)}',
+                                                          style: TextStyle(
+                                                            color: isNegative
+                                                                ? Colors
+                                                                    .red[800]
+                                                                : Colors
+                                                                    .green[800],
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.w900,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 18.0),
+                                                    child: Text(
+                                                      monthPlan.toString(),
+                                                      style: TextStyle(
+                                                          color: colorIndicator,
+                                                          fontWeight:
+                                                              FontWeight.w900),
+                                                    ),
+                                                  )
+                                                ],
                                               ),
                                             )
                                           ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20),
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(20),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                           margin: EdgeInsets.only(bottom: _w / 20),
-                          height: _w / 3,
+                          height: _w / 2.5,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius:
@@ -338,7 +451,7 @@ class _BudgetDetailState extends State<BudgetDetail> {
             )
           : const Center(
               child: Text(
-                'No Plan for this month yet!',
+                'No Plan for this year!',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 25,

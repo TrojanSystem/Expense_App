@@ -42,16 +42,27 @@ class ExpenseCategories extends StatelessWidget {
       ),
       body: Consumer<TransactionData>(
         builder: (context, file, child) {
-          return ListView.builder(
-            itemCount: y.length,
-            itemBuilder: (context, indexs) {
-              return ExpenseCategoriesItem(
-                newDateList: newDateList,
-                expense: file.expenseList[indexs],
-                index: indexs,
-              );
-            },
-          );
+          return newDateList.isNotEmpty
+              ? ListView.builder(
+                  itemCount: y.length,
+                  itemBuilder: (context, indexs) {
+                    return ExpenseCategoriesItem(
+                      newDateList: newDateList,
+                      expense: file.expenseList[indexs],
+                      index: indexs,
+                    );
+                  },
+                )
+              : const Center(
+                  child: Text(
+                    'Not Yet!',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                );
         },
       ),
     );

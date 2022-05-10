@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
 import '../model/monthly_budget_data.dart';
 import '../model/transaction_data.dart';
 
@@ -12,8 +13,13 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
   final int selectedMonth;
   final int index;
 
-  MonthExpenseCategoriesItem(
-      {this.todayFilteredList, this.index, this.expense, this.selectedMonth});
+  const MonthExpenseCategoriesItem(
+      {Key key,
+      this.todayFilteredList,
+      this.index,
+      this.expense,
+      this.selectedMonth})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +59,12 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            margin: const EdgeInsets.only(left: 18.0, bottom: 10),
-            child: Column(
+          Expanded(
+            flex: 3,
+            child: Container(
+              height: 80,
+              margin: const EdgeInsets.only(left: 18.0),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -94,21 +103,67 @@ class MonthExpenseCategoriesItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                ]),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 18.0),
-            child: IconButton(
-              onPressed: () {
-                Provider.of<TransactionData>(context, listen: false)
-                    .deleteExpenseList(expense.id);
-              },
-              icon: const Icon(
-                Icons.cancel_outlined,
-                color: Colors.red,
-                size: 30,
+                ],
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 40,
+                    spreadRadius: 10,
+                  ),
+                ],
               ),
             ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              height: 80,
+              child: Column(
+                children: [
+                  Text(
+                    sum.toStringAsFixed(2),
+                    style: storageItemMoney,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.fade,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Text(
+                    'ETB',
+                    style: storageItemCurrency,
+                  ),
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color:  monthData == 0
+                    ? Colors.green
+                    : xxx.floor() < 75
+                    ? Colors.green
+                    : xxx.floor() < 100
+                    ? Colors.redAccent
+                    : Colors.red[800],
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+
+            // IconButton(
+            //   onPressed: () {
+            //     Provider.of<TransactionData>(context, listen: false)
+            //         .deleteExpenseList(expense.id);
+            //   },
+            //   icon: const Icon(
+            //     Icons.cancel_outlined,
+            //     color: Colors.red,
+            //     size: 30,
+            //   ),
+            // ),
           ),
         ],
       ),

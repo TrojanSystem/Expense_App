@@ -113,6 +113,8 @@ class SummaryExpenseList extends StatelessWidget {
                             Container(
                               margin: const EdgeInsets.only(left: 15, top: 5),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
                                     monthExpense[index].name,

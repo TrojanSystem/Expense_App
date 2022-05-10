@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     for (int x = 0; x < z.length; x++) {
       sum += double.parse(z[x]);
     }
-
+    Provider.of<TransactionData>(context).monthTotalPrice = sum;
     final monthBudgetInYear =
         Provider.of<MonthlyBudgetData>(context).monthlyBudgetList;
     final budget = monthBudgetInYear

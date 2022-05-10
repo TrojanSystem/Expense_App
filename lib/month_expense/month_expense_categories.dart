@@ -73,17 +73,28 @@ class _MonthExpenseCategoriesState extends State<MonthExpenseCategories> {
         builder: (context, file, child) {
           final totPrice = Provider.of<TransactionData>(context).totalPrice;
 
-          return ListView.builder(
-            itemCount: y.length,
-            itemBuilder: (context, index) {
-              return MonthExpenseCategoriesItem(
-                todayFilteredList: todayFilteredList,
-                expense: file.expenseList[index],
-                selectedMonth: selectedMonth,
-                index: index,
-              );
-            },
-          );
+          return todayFilteredList.isNotEmpty
+              ? ListView.builder(
+                  itemCount: y.length,
+                  itemBuilder: (context, index) {
+                    return MonthExpenseCategoriesItem(
+                      todayFilteredList: todayFilteredList,
+                      expense: file.expenseList[index],
+                      selectedMonth: selectedMonth,
+                      index: index,
+                    );
+                  },
+                )
+              : const Center(
+                  child: Text(
+                    'Not Yet!',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                );
         },
       ),
     );
