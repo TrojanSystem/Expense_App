@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   flex: 7,
                   child: Consumer<TransactionData>(
-                    builder: (context, data, child) => data.expenseList.isEmpty
+                    builder: (context, data, child) => todayFilteredList.isEmpty
                         ? const Center(
                             child: Text(
                               'Enter Today\'s Transaction',

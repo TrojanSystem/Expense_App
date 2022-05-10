@@ -104,6 +104,7 @@ class _SummaryItemState extends State<SummaryItem> {
               padding: const EdgeInsets.only(left: 8.0, right: 8),
               margin: const EdgeInsets.only(left: 8.0, right: 8, top: 10),
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
                 gradient: LinearGradient(
                   colors: [
                     const Color.fromRGBO(40, 53, 147, 1),

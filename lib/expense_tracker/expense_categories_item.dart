@@ -4,6 +4,7 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
 import '../model/transaction_data.dart';
 
 class ExpenseCategoryItems extends StatefulWidget {
@@ -85,12 +86,14 @@ class _ExpenseCategoryItemsState extends State<ExpenseCategoryItems> {
               curve: Curves.fastLinearToSlowEaseIn,
               height: isTapped
                   ? isExpanded
-                      ? 80
-                      : 85
+                      ? 100
+                      : 105
                   : isExpanded
                       ? 245
                       : 250,
-              width: isExpanded ? 345 : 350,
+              width: isExpanded
+                  ? MediaQuery.of(context).size.width * 0.95
+                  : MediaQuery.of(context).size.width * 0.95,
               child: isTapped
                   ? Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0.0),
@@ -98,42 +101,88 @@ class _ExpenseCategoryItemsState extends State<ExpenseCategoryItems> {
                         children: [
                           Row(
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      y[widget.index],
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  height: 80,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        sum.toStringAsFixed(2),
+                                        style: storageItemMoney,
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.fade,
                                       ),
-                                    ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      const Text(
+                                        'ETB',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                    ],
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: SizedBox(
-                                      height: 25,
-                                      width: 250,
-                                      child: FAProgressBar(
-                                        backgroundColor: Colors.black12,
-                                        size: 20,
-                                        progressColor: Colors.green,
-                                        currentValue: totSum == 0
-                                            ? (0).floor()
-                                            : ((sum * 100) / totSum).floor(),
-                                        displayText: '%',
-                                        displayTextStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                  margin: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: totSum == 0
+                                        ? Colors.green
+                                        : ((sum * 100) / totSum).floor() < 75
+                                            ? Colors.green
+                                            : ((sum * 100) / totSum).floor() <
+                                                    100
+                                                ? Colors.redAccent
+                                                : Colors.red[800],
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        y[widget.index],
+                                        style: const TextStyle(
                                           fontSize: 20,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: SizedBox(
+                                        height: 25,
+                                        width: 250,
+                                        child: FAProgressBar(
+                                          backgroundColor: Colors.black12,
+                                          size: 20,
+                                          progressColor: Colors.green,
+                                          currentValue: totSum == 0
+                                              ? (0).floor()
+                                              : ((sum * 100) / totSum).floor(),
+                                          displayText: '%',
+                                          displayTextStyle: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
                               ),
                               Icon(
                                 isTapped
@@ -154,42 +203,88 @@ class _ExpenseCategoryItemsState extends State<ExpenseCategoryItems> {
                         children: [
                           Row(
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      y[widget.index],
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  height: 80,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        sum.toStringAsFixed(2),
+                                        style: storageItemMoney,
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.fade,
                                       ),
-                                    ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      const Text(
+                                        'ETB',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                    ],
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: SizedBox(
-                                      height: 25,
-                                      width: 250,
-                                      child: FAProgressBar(
-                                        backgroundColor: Colors.black12,
-                                        size: 20,
-                                        progressColor: Colors.green,
-                                        currentValue: totSum == 0
-                                            ? (0).floor()
-                                            : ((sum * 100) / totSum).floor(),
-                                        displayText: '%',
-                                        displayTextStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                  margin: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: totSum == 0
+                                        ? Colors.green
+                                        : ((sum * 100) / totSum).floor() < 75
+                                            ? Colors.green
+                                            : ((sum * 100) / totSum).floor() <
+                                                    100
+                                                ? Colors.redAccent
+                                                : Colors.red[800],
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        y[widget.index],
+                                        style: const TextStyle(
                                           fontSize: 20,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: SizedBox(
+                                        height: 25,
+                                        width: 250,
+                                        child: FAProgressBar(
+                                          backgroundColor: Colors.black12,
+                                          size: 20,
+                                          progressColor: Colors.green,
+                                          currentValue: totSum == 0
+                                              ? (0).floor()
+                                              : ((sum * 100) / totSum).floor(),
+                                          displayText: '%',
+                                          displayTextStyle: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
                               ),
                               Icon(
                                 isTapped

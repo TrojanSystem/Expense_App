@@ -66,6 +66,7 @@ class SummaryExpenseList extends StatelessWidget {
                     showModalBottomSheet(
                       context: context,
                       builder: (ctx) => TransactionUpdateForm(
+                          isExpense: monthExpense[index].isIncome,
                           index: monthExpense[index].id,
                           existedIsIncome: monthExpense[index].isIncome,
                           existedDescription: monthExpense[index].description,
@@ -111,28 +112,14 @@ class SummaryExpenseList extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              margin: const EdgeInsets.only(left: 15, top: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    monthExpense[index].name,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    monthExpense[index].description,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
+                              margin: const EdgeInsets.only(left: 15, top: 20),
+                              child: Text(
+                                monthExpense[index].description,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
