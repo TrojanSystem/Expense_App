@@ -102,31 +102,55 @@ class _TransactionTileIncomeState extends State<TransactionTileIncome> {
                         },
                         icon: const Icon(
                           Icons.edit,
-                          color: Colors.purple,
+                          color: Colors.green,
                           size: 20,
                         ),
                       ),
                       IconButton(
                         onPressed: () async {
-                          Provider.of<TransactionData>(context, listen: false)
-                              .deleteExpenseList(widget.expense.id);
-                          double totalMinus = Provider.of<TransactionData>(
-                                  context,
-                                  listen: false)
-                              .minusTotalPrice(
-                                  double.parse(widget.expense.price),
-                                  widget.expense.isIncome);
-                          final updateExpense = TransactionModel(
-                            isIncome: widget.expense.isIncome,
-                            id: widget.expense.id,
-                            name: widget.expense.name,
-                            description: widget.expense.description,
-                            price: widget.expense.price,
-                            date: widget.expense.date.toString(),
-                            total: totalMinus.toString(),
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: const Text('Are you sure'),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop(false);
+                                  },
+                                  child: const Text('No'),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Provider.of<TransactionData>(context,
+                                            listen: false)
+                                        .deleteExpenseList(widget.expense.id);
+                                    double totalMinus = Provider.of<
+                                                TransactionData>(context,
+                                            listen: false)
+                                        .minusTotalPrice(
+                                            double.parse(widget.expense.price),
+                                            widget.expense.isIncome);
+                                    final updateExpense = TransactionModel(
+                                      isIncome: widget.expense.isIncome,
+                                      id: widget.expense.id,
+                                      name: widget.expense.name,
+                                      description: widget.expense.description,
+                                      price: widget.expense.price,
+                                      date: widget.expense.date.toString(),
+                                      total: totalMinus.toString(),
+                                    );
+                                    Provider.of<TransactionData>(context,
+                                            listen: false)
+                                        .updateExpenseList(updateExpense);
+                                    Navigator.of(ctx).pop(true);
+                                  },
+                                  child: const Text('Yes'),
+                                ),
+                              ],
+                              content: const Text(
+                                  'Do you want to remove this entry?'),
+                            ),
                           );
-                          Provider.of<TransactionData>(context, listen: false)
-                              .updateExpenseList(updateExpense);
                         },
                         icon: const Icon(
                           Icons.delete_forever,

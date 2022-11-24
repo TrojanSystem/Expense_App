@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -61,23 +62,77 @@ class SummaryExpenseList extends StatelessWidget {
                 curve: Curves.fastLinearToSlowEaseIn,
                 horizontalOffset: -300,
                 verticalOffset: -850,
-                child: GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (ctx) => TransactionUpdateForm(
-                          isExpense: monthExpense[index].isIncome,
-                          index: monthExpense[index].id,
-                          existedIsIncome: monthExpense[index].isIncome,
-                          existedDescription: monthExpense[index].description,
-                          existedName: monthExpense[index].name,
-                          existedPrice: monthExpense[index].price,
-                          existedDate: monthExpense[index].date),
-                    );
-                  },
-                  onLongPress: () {
-                    accessor.deleteExpenseList(monthExpense[index].id);
-                  },
+                child: Slidable(
+                  endActionPane: ActionPane(
+                    motion: const ScrollMotion(),
+                    children: [
+                      const SizedBox(
+                        width: 50,
+                      ),
+                      IconButton(
+                        color: Colors.red,
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: const Text('Are you sure'),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop(false);
+                                  },
+                                  child: const Text('No'),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    accessor.deleteExpenseList(
+                                        monthExpense[index].id);
+                                    Navigator.of(ctx).pop(true);
+                                  },
+                                  child: const Text('Yes'),
+                                ),
+                              ],
+                              content: const Text(
+                                  'Do you want to remove this income?'),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.delete_forever,
+                          size: 40,
+                        ),
+                      ),
+                    ],
+                  ),
+                  startActionPane: ActionPane(
+                    motion: const ScrollMotion(),
+                    children: [
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      IconButton(
+                        color: Colors.green,
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (ctx) => TransactionUpdateForm(
+                                isExpense: monthExpense[index].isIncome,
+                                index: monthExpense[index].id,
+                                existedIsIncome: monthExpense[index].isIncome,
+                                existedDescription:
+                                    monthExpense[index].description,
+                                existedName: monthExpense[index].name,
+                                existedPrice: monthExpense[index].price,
+                                existedDate: monthExpense[index].date),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.edit,
+                          size: 40,
+                        ),
+                      ),
+                    ],
+                  ),
                   child: Container(
                     child: Stack(
                       children: [

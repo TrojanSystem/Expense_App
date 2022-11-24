@@ -65,7 +65,14 @@ class ExpenseCategoriesItem extends StatelessWidget {
                       child: FAProgressBar(
                         backgroundColor: Colors.black12,
                         size: 20,
-                        progressColor: Colors.green,
+                        progressColor: sumTotalprice == 0
+                            ? Colors.green
+                            : ((sum * 100) / sumTotalprice).floor() < 75
+                            ? Colors.green
+                            : ((sum * 100) / sumTotalprice).floor() <
+                            100
+                            ? Colors.redAccent
+                            : Colors.red[800],
                         currentValue: sumTotalprice == 0
                             ? (0).floor()
                             : ((sum * 100) / sumTotalprice).floor(),

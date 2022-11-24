@@ -166,7 +166,16 @@ class _ExpenseCategoryItemsState extends State<ExpenseCategoryItems> {
                                         child: FAProgressBar(
                                           backgroundColor: Colors.black12,
                                           size: 20,
-                                          progressColor: Colors.green,
+                                          progressColor: totSum == 0
+                                              ? Colors.green
+                                              : ((sum * 100) / totSum).floor() <
+                                                      75
+                                                  ? Colors.green
+                                                  : ((sum * 100) / totSum)
+                                                              .floor() <
+                                                          100
+                                                      ? Colors.redAccent
+                                                      : Colors.red[800],
                                           currentValue: totSum == 0
                                               ? (0).floor()
                                               : ((sum * 100) / totSum).floor(),
@@ -268,7 +277,16 @@ class _ExpenseCategoryItemsState extends State<ExpenseCategoryItems> {
                                         child: FAProgressBar(
                                           backgroundColor: Colors.black12,
                                           size: 20,
-                                          progressColor: Colors.green,
+                                          progressColor: totSum == 0
+                                              ? Colors.green
+                                              : ((sum * 100) / totSum).floor() <
+                                                      75
+                                                  ? Colors.green
+                                                  : ((sum * 100) / totSum)
+                                                              .floor() <
+                                                          100
+                                                      ? Colors.redAccent
+                                                      : Colors.red[800],
                                           currentValue: totSum == 0
                                               ? (0).floor()
                                               : ((sum * 100) / totSum).floor(),

@@ -191,13 +191,13 @@ class _BudgetDetailState extends State<BudgetDetail> {
                               builder: (ctx) => AlertDialog(
                                 title: const Text('Are you sure'),
                                 actions: [
-                                  FlatButton(
+                                  ElevatedButton(
                                     onPressed: () {
                                       Navigator.of(ctx).pop(false);
                                     },
                                     child: const Text('No'),
                                   ),
-                                  FlatButton(
+                                  ElevatedButton(
                                     onPressed: () {
                                       Provider.of<MonthlyBudgetData>(context,
                                               listen: false)

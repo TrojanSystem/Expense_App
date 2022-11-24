@@ -140,7 +140,7 @@ class _TransactionUpdateFormState extends State<TransactionUpdateForm> {
                   if (value.isEmpty) {
                     return 'Enter the price';
                   } else if (!pattern.hasMatch(value)) {
-                    return 'Enter Valid valid price';
+                    return 'Enter Valid price';
                   } else {
                     return null;
                   }

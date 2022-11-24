@@ -93,13 +93,13 @@ class _IncomeDetailState extends State<IncomeDetail> {
                               builder: (ctx) => AlertDialog(
                                 title: const Text('Are you sure'),
                                 actions: [
-                                  FlatButton(
+                                  ElevatedButton(
                                     onPressed: () {
                                       Navigator.of(ctx).pop(false);
                                     },
                                     child: const Text('No'),
                                   ),
-                                  FlatButton(
+                                  ElevatedButton(
                                     onPressed: () {
                                       Provider.of<TransactionData>(context,
                                               listen: false)
@@ -134,6 +134,7 @@ class _IncomeDetailState extends State<IncomeDetail> {
                             showModalBottomSheet(
                                 context: context,
                                 builder: (ctx) => TransactionUpdateForm(
+                                    isExpense: incomeDetail[index].isIncome,
                                     index: incomeDetail[index].id,
                                     existedIsIncome:
                                         incomeDetail[index].isIncome,
